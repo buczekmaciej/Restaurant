@@ -1,20 +1,111 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AppController!{% endblock %}
+{% block title %}Johnny's
+{% endblock %}
+
+{% block stylesheets %}
+    {{parent()}}
+
+    <link href="{{asset('styles/app.css')}}" rel="stylesheet">
+{% endblock %}
+
+{% block nav %}
+    <nav class="nav">
+        <div class="label">
+            <a href="{{path('homepage')}}">Johnny's</a>
+        </div>
+        <div class="links">
+            <a href="{{path('meals')}}">Meals</a>
+            <a href="{{path('order')}}">Order</a>
+        </div>
+    </nav>
+{% endblock %}
+
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <article class="greet">
+        <section class="content">
+            <h2>Welcome to Johnny's restaurant</h2>
+            <p>Best restaurant in state</p>
+        </section>
+    </article>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <article class="details">
+        <section class="location">
+            <span>
+                <i class="fas fa-map-marker-alt"></i>
+                3425 Maple Ave, Los Angeles
+            </span>
+            <span>
+                <i class="fas fa-map-marker-alt"></i>
+                231 Parthenia St, Los Angeles
+            </span>
+            <span>
+                <i class="fas fa-map-marker-alt"></i>
+                3425 Oak St, San Francisco
+            </span>
+            <span>
+                <i class="fas fa-map-marker-alt"></i>
+                343 24th St, San Francisco
+            </span>
+        </section>
+        <section class="work-hours">
+            {% set status = '' %}
+            {% if "now"|date('l') != 'Sunday' %}
+                {% if "now"|date('l') != 'Saturday' %}
+                    {% if 'now'|date('H:i:s') > '08:00:00' and 'now'|date('H:i:s') < '22:00:00' %}
+                        {% set status = 'open' %}
+                    {% else %}
+                        {% set status = 'closed' %}
+                    {% endif %}
+                {% else %}
+                    {% if 'now'|date('H:i:s') > '10:00:00' and 'now'|date('H:i:s') < '20:00:00' %}
+                        {% set status = 'open' %}
+                    {% else %}
+                        {% set status = 'closed' %}
+                    {% endif %}
+                {% endif %}
+            {% else %}
+                {% set status = 'closed' %}
+            {% endif %}
+            <p class="status {{status}}">
+                <i class="fas fa-clock"></i>
+                {{status|capitalize}}
+            </p>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'E:/AAA/Projects/Symfony/Restaurant/src/Controller/AppController.php'|file_link(0) }}">src/Controller/AppController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'E:/AAA/Projects/Symfony/Restaurant/templates/app/index.html.twig'|file_link(0) }}">templates/app/index.html.twig</a></code></li>
-    </ul>
-</div>
+            <span class="hours">
+                <p>
+                    <span>Monday - Friday</span>
+                    <span>8:00 AM - 10:00PM</span>
+                </p>
+                <p>
+                    <span>Saturday</span>
+                    <span>10:00 AM - 8:00PM</span>
+                </p>
+                <p>
+                    <span>Sunday</span>
+                    <span>Closed</span>
+                </p>
+            </span>
+        </section>
+    </article>
+{% endblock %}
+
+
+{% block foot %}
+    <footer class="foot">
+        <div class="contact">
+            <a class="phone" href="tel:111-222-333">
+                <i class="fas fa-phone"></i>
+                111-222-333
+            </a>
+        </div>
+        <div class="copy">
+            <p>&copy;
+                {{"now"|date('Y')}}
+                Johnny's
+            </p>
+            <span>All rights reserved</span>
+        </div>
+    </footer>
 {% endblock %}

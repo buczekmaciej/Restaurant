@@ -1,0 +1,122 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+}
+body {
+  background-color: rgrgb(235, 235, 235);
+}
+.nav {
+  width: 80%;
+  margin: 1% auto;
+  font-size: 45px;
+  display: flex;
+  justify-content: space-between;
+  align-content: space-between;
+}
+.nav a {
+  color: #000;
+}
+.nav .label {
+  font-family: "Indie Flower", cursive;
+}
+.nav .links {
+  width: 30%;
+  display: flex;
+  justify-content: space-between;
+  align-content: space-between;
+}
+.nav .links a {
+  font-family: "Lexend Exa", sans-serif;
+}
+.work-hours,
+.greet {
+  cursor: default;
+}
+
+.greet {
+  background-image: url("../images/pizza.jpg");
+  width: 100%;
+}
+.content {
+  height: 600px;
+  width: 80%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  font-weight: bold;
+  background-repeat: no-repeat;
+  color: rgb(0, 0, 0);
+}
+.content h2 {
+  font-size: 45px;
+}
+.content p {
+  font-size: 25px;
+}
+
+.details {
+  width: 50%;
+  min-height: 200px;
+  margin: auto;
+  display: flex;
+}
+.location,
+.work-hours {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.location span,
+.work-hours > p,
+.work-hours span p {
+  height: 30px;
+  font-size: 18px;
+}
+.work-hours span p {
+  display: flex;
+}
+.work-hours span p span {
+  flex: 1;
+}
+.fa-map-marker-alt {
+  color: red;
+}
+.open {
+  color: green;
+}
+.closed {
+  color: red;
+}
+
+.foot {
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  color: #fff;
+  background-color: rgb(141, 137, 137);
+}
+.contact {
+  font-size: 20px;
+  text-align: center;
+  padding: 5px 0;
+}
+.phone {
+  color: lime;
+  font-weight: bold;
+}
+.copy {
+  text-align: center;
+}
+.copy p,
+.copy span {
+  display: inline-block;
+  margin: 0.2% 2%;
+}
+.copy span {
+  font-weight: bold;
+}
