@@ -7,39 +7,42 @@
 
 
 {% block body %}
-    <article class="menu">
+    <article class="menuContainer">
         {% if types is not empty and meals is not empty %}
-            {% for type in types %}
-                <section class="{{type.Type}}">
-                    <h3>{{type.Type}}</h3>
+            <section class="menu">
+                {% for type in types %}
+                    <section class="{{type.Type}}">
+                        <h3>{{type.Type}}</h3>
 
-                    {% for meal in meals %}
-                        {% for product in meal %}
-                            {% if product.Type == type.Type %}
-                                <section class="meal">
-                                    <p>
-                                        <span>{{product.Name}}</span>
-                                        <span>
-                                            <i class="fas fa-dollar-sign"></i>
-                                            {{product.Price}}</span>
-                                    </p>
-                                    <p>
-                                        {% for ingr in product.Ingredients %}
-                                            {{ingr.Name}}
-                                            {% if loop.last == false %}
-                                                ,
-                                            {% endif %}
-                                        {% endfor %}
-                                    </p>
-                                </section>
-                            {% endif %}
+                        {% for meal in meals %}
+                            {% for product in meal %}
+                                {% if product.Type == type.Type %}
+                                    <section class="meal">
+                                        <p>
+                                            <span>{{product.Name}}</span>
+                                            <span>
+                                                <i class="fas fa-dollar-sign"></i>
+                                                {{product.Price}}</span>
+                                        </p>
+                                        <p>
+                                            {% for ingr in product.Ingredients %}
+                                                {{ingr.Name}}
+                                                {% if loop.last == false %}
+                                                    ,
+                                                {% endif %}
+                                            {% endfor %}
+                                        </p>
+                                    </section>
+                                {% endif %}
+                            {% endfor %}
                         {% endfor %}
-                    {% endfor %}
-                </section>
-            {% endfor %}
+                    </section>
+                {% endfor %}
+            </section>
         {% else %}
             <section class="error">
-                <h3>Oops, looks like menu is empty...</h3>
+                <h1>Oops, looks like something happend to menu...</h1>
+                <p>We are working on it stay tuned!</p>
             </section>
         {% endif %}
     </article>

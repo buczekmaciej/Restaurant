@@ -125,13 +125,15 @@ body {
 }
 
 /* Meals */
-.menu {
-  height: 600px;
-  overflow-y: scroll;
+.menuContainer {
   width: 80%;
   margin: 1% auto;
-  padding: 15px;
   cursor: default;
+}
+.menu {
+  height: 650px;
+  overflow-y: scroll;
+  padding: 15px;
 }
 .menu > section {
   width: 95%;
@@ -176,4 +178,18 @@ body {
   font-size: 18px;
   float: unset;
   margin: 0;
+}
+
+.error {
+  height: 550px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+.error h1 {
+  font-size: 35px;
+}
+.error p {
+  font-size: 20px;
 }
