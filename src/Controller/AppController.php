@@ -21,15 +21,18 @@ class AppController extends AbstractController
      */
     public function meals(MealsRepository $mR)
     {
-        return $this->render('app/meals.html.twig', []);
-    }
+        $types=$mR->findTypes();
 
-    /**
-     * @Route("/m/{spec}", name="specified")
-     */
-    public function specMeals($spec, MealsRepository $mR)
-    {
-        return $this->render('app/spec.html.twig', []);
+        $meals=array();
+        foreach($types as $type)
+        {
+            $meals[]=$mR->findBy(['Type'=>$type]);
+        }
+
+        return $this->render('app/meals.html.twig', [
+            'types'=>$types,
+            'meals'=>$meals
+        ]);
     }
 
     /**

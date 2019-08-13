@@ -1,0 +1,19 @@
+{% extends "customer_service/homepage.html.twig" %}
+
+{% block title %}Meal create
+{% endblock %}
+
+
+{% block body %}
+    <article class="form">
+        <section>
+            {{form_start(new)}}
+            {{form_widget(new.Name)}}
+            {{form_widget(new.Price)}}
+            {{form_widget(new.Type)}}
+            {{form_widget(new.Ingr)}}
+            {{form_widget(new.Insert)}}
+            {{form_end(new)}}
+        </section>
+    </article>
+{% endblock %}

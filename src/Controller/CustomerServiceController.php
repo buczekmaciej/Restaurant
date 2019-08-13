@@ -4,6 +4,15 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Entity\Meals;
+use App\Entity\Ingredients;
+use Symfony\Component\HttpFoundation\Request;
+use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\IngredientsRepository;
+use App\Repository\MealsRepository;
 
 class CustomerServiceController extends AbstractController
 {
@@ -26,23 +35,71 @@ class CustomerServiceController extends AbstractController
     /**
      * @Route("/employee/meals", name="eMeals")
      */
-    public function eMeals()
+    public function eMeals(MealsRepository $mR)
     {
-        return $this->render('customer_service/meals.html.twig', []);
+        $meals=$mR->findAll();
+        return $this->render('customer_service/meals.html.twig', [
+            'meals'=>$meals
+        ]);
     }
 
     /**
-     * @Route("/employe/m/new", name="newMeal")
+     * @Route("/employee/m/new", name="newMeal")
      */
-    public function newMeal()
+    public function newMeal(EntityManagerInterface $em, Request $request, MealsRepository $mR)
     {
-        return $this->render('customer_service/newMeal.html.twig', []);
+        $new=$this->createFormBuilder()
+        ->add('Name', TextType::class,['attr'=>['placeholder'=>'Meal name']])
+        ->add('Price', TextType::class, ['attr'=>['placeholder'=>'Meal price']])
+        ->add('Type', TextType::class, ['attr'=>['placeholder'=>'Meal type']])
+        ->add('Ingr', EntityType::class,[
+            'class'=>Ingredients::class,
+            'expanded'=>true,
+            'multiple'=>true,
+            'choice_label'=>'Name'
+        ])
+        ->add('Insert', SubmitType::class)
+        ->getForm();
+
+        $new->handleRequest($request);
+
+        if($new->isSubmitted() && $new->isValid())
+        {
+            $data=$new->getData();
+            
+            if(!$mR->findBy(['Name'=>$data['Name']]))
+            {
+                $meal=new Meals();
+                $meal->setName($data['Name']);
+                $meal->setPrice($data['Price']);
+                $meal->setType($data['Type']);
+                foreach($data['Ingr'] as $ing)
+                {
+                    $meal->addIngredient($ing);
+                }
+
+                $em->persist($meal);
+                $em->flush();
+
+                $this->addFlash('success', 'Meal has been added');
+
+                return $this->redirectToRoute('eMeals', []);
+            }
+            else
+            {
+                $this->addFlash('danger', 'This meal is already in database');
+            }
+        }
+
+        return $this->render('customer_service/newMeal.html.twig', [
+            'new'=>$new->createView()
+        ]);
     }
 
     /**
-     * @Route("/employee/neal/{id}", name="removeMeal")
+     * @Route("/employee/meal/{id}", name="removeMeal")
      */
-    public function removeMeal()
+    public function removeMeal(EntityManagerInterface $em)
     {
         return $this->redirectToRoute('eMeals', []);
     }
@@ -58,7 +115,7 @@ class CustomerServiceController extends AbstractController
     /**
      * @Route("/employee/o/new", name="newOrder")
      */
-    public function newOrder()
+    public function newOrder(EntityManagerInterface $em, Request $request)
     {
         return $this->render('customer_service/newOrder.html.twig', []);
     }
@@ -66,7 +123,7 @@ class CustomerServiceController extends AbstractController
     /**
      * @Route("/employee/order/{id}", name="removeOrder")
      */
-    public function removeOrder()
+    public function removeOrder(EntityManagerInterface $em)
     {
         return $this->redirectToRoute('eOrders', []);
     }
@@ -74,17 +131,51 @@ class CustomerServiceController extends AbstractController
     /**
      * @Route("/employee/ingredients", name="ingredients")
      */
-    public function ingredients()
+    public function ingredients(IngredientsRepository $iR)
     {
-        return $this->render('customer_service/ingredients.html.twig', []);
+        $ings=$iR->findBy(array(),array('Name'=>'ASC'));
+        return $this->render('customer_service/ingredients.html.twig', [
+            'ings'=>$ings
+        ]);
     }
 
     /**
      * @Route("/employee/i/new", name="newIngredients")
      */
-    public function newIngredients()
+    public function newIngredients(EntityManagerInterface $em, Request $request, IngredientsRepository $iR)
     {
-        return $this->render('customer_service/newIngr.html.twig', []);
+        $new=$this->createFormBuilder()
+        ->add('Name', TextType::class,['attr'=>['placeholder'=>'Ingredient name']])
+        ->add('Insert', SubmitType::class)
+        ->getForm();
+
+        $new->handleRequest($request);
+
+        if($new->isSubmitted() && $new->isValid())
+        {
+            $name=$new->getData()['Name'];
+
+            if(!$iR->findBy(['Name'=>$name]))
+            {
+                $ingerd=new Ingredients();
+                $ingerd->setName($name);
+
+                $em->persist($ingerd);
+                $em->flush();
+
+                $this->addFlash('success', 'Ingredient has been added');
+                
+                return $this->redirectToRoute('ingredients', []);
+            }
+            else
+            {
+                $this->addFlash('danger', 'This ingredient is already in database');
+            }
+        }
+
+        return $this->render('customer_service/newIngr.html.twig', [
+            'new'=>$new->createView()
+        ]);
     }
 
     /**
@@ -98,7 +189,7 @@ class CustomerServiceController extends AbstractController
     /**
      * @Route("/owner/e/new", name="newEmployee")
      */
-    public function newEmployee()
+    public function newEmployee(EntityManagerInterface $em, Request $request)
     {
         return $this->render('owner/newEmployee.html.twig', []);
     }
@@ -106,7 +197,7 @@ class CustomerServiceController extends AbstractController
     /**
      * @Route("/owner/employee/{id}", name="removeEmployee")
      */
-    public function removeEmployee()
+    public function removeEmployee(EntityManagerInterface $em)
     {
         return $this->redirectToRoute('employees', []);
     }

@@ -123,3 +123,57 @@ body {
 .copy span {
   font-weight: bold;
 }
+
+/* Meals */
+.menu {
+  height: 600px;
+  overflow-y: scroll;
+  width: 80%;
+  margin: 1% auto;
+  padding: 15px;
+  cursor: default;
+}
+.menu > section {
+  width: 95%;
+  min-height: 170px;
+  margin: 1.6% auto;
+  padding: 0.2% 0;
+  background-color: rgb(247, 231, 231);
+}
+.menu section h3 {
+  font-size: 40px;
+  margin: 1%;
+}
+.menu section .meal {
+  width: 95%;
+  margin: 1% auto;
+  min-height: 75px;
+  max-height: 120px;
+  padding: 0 10px;
+  font-family: "Dosis", sans-serif;
+  border-bottom: 1px solid #000;
+}
+.meal p:first-of-type {
+  font-size: 30px;
+}
+.meal p span:first-of-type {
+  font-weight: 600;
+}
+.meal p span:last-of-type {
+  color: green;
+  font-size: 25px;
+  font-weight: bold;
+  float: right;
+  margin: 1%;
+}
+.meal p:last-of-type {
+  margin: 1% 0;
+  width: 80%;
+  font-size: 18px;
+}
+.meal p:last-of-type span:last-of-type {
+  color: #000;
+  font-size: 18px;
+  float: unset;
+  margin: 0;
+}

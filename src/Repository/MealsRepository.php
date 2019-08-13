@@ -19,6 +19,16 @@ class MealsRepository extends ServiceEntityRepository
         parent::__construct($registry, Meals::class);
     }
 
+    public function findTypes()
+    {
+        return $this->createQueryBuilder('m')
+            ->select('m.Type')->distinct()
+            ->orderBy('m.Type', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     // /**
     //  * @return Meals[] Returns an array of Meals objects
     //  */

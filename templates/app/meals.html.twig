@@ -1,0 +1,46 @@
+{% extends "app/homepage.html.twig" %}
+
+{% block title %}
+    {{parent()}}
+    | Meals
+{% endblock %}
+
+
+{% block body %}
+    <article class="menu">
+        {% if types is not empty and meals is not empty %}
+            {% for type in types %}
+                <section class="{{type.Type}}">
+                    <h3>{{type.Type}}</h3>
+
+                    {% for meal in meals %}
+                        {% for product in meal %}
+                            {% if product.Type == type.Type %}
+                                <section class="meal">
+                                    <p>
+                                        <span>{{product.Name}}</span>
+                                        <span>
+                                            <i class="fas fa-dollar-sign"></i>
+                                            {{product.Price}}</span>
+                                    </p>
+                                    <p>
+                                        {% for ingr in product.Ingredients %}
+                                            {{ingr.Name}}
+                                            {% if loop.last == false %}
+                                                ,
+                                            {% endif %}
+                                        {% endfor %}
+                                    </p>
+                                </section>
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                </section>
+            {% endfor %}
+        {% else %}
+            <section class="error">
+                <h3>Oops, looks like menu is empty...</h3>
+            </section>
+        {% endif %}
+    </article>
+{% endblock %}
