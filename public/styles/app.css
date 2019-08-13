@@ -22,7 +22,7 @@ body {
   font-family: "Indie Flower", cursive;
 }
 .nav .links {
-  width: 30%;
+  width: 35%;
   display: flex;
   justify-content: space-between;
   align-content: space-between;
@@ -70,6 +70,9 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+.location a {
+  color: blue;
 }
 .location span,
 .work-hours > p,
