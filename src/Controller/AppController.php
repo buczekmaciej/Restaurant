@@ -71,11 +71,9 @@ class AppController extends AbstractController
     /**
      * @Route("/order/pick", name="pickMeal")
      */
-    public function pickMeal(Request $request, SessionInterface $session, MealsRepository $mR)
+    public function pickMeal()
     {
-
-        return $this->render('app/pick.html.twig', [
-        ]);
+        return $this->render('app/pick.html.twig', []);
     }
 
     /**
