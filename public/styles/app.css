@@ -22,13 +22,12 @@ body {
   font-family: "Indie Flower", cursive;
 }
 .nav .links {
-  width: 35%;
+  width: 25%;
   display: flex;
   justify-content: space-between;
-  align-content: space-between;
 }
 .nav .links a {
-  font-family: "Lexend Exa", sans-serif;
+  font-family: "Blinker", sans-serif;
 }
 .work-hours,
 .greet {
@@ -160,6 +159,7 @@ body {
 }
 .meal p span:first-of-type {
   font-weight: 600;
+  font-family: "Indie Flower", cursive;
 }
 .meal p span:last-of-type {
   color: green;
@@ -193,3 +193,5 @@ body {
 .error p {
   font-size: 20px;
 }
+
+/* Order */

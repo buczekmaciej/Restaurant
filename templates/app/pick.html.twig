@@ -1,0 +1,10 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <article class="pickEm" id="pick"></article>
+{% endblock %}
+
+{% block javascripts %}
+    {{parent()}}
+    <script src="{{asset('js/json.js')}}"></script>
+{% endblock %}

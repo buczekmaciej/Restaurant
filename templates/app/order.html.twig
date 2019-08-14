@@ -1,0 +1,17 @@
+{% extends "app/homepage.html.twig" %}
+
+{% block title %}
+    {{parent()}}
+    | Order
+{% endblock %}
+
+{% block body %}
+    <article class="order">
+        <section class="orderForm">
+            {{form_start(order)}}
+            {{form_widget(order.Address)}}
+            {{form_widget(order.Proceed)}}
+            {{form_end(order)}}
+        </section>
+    </article>
+{% endblock %}
