@@ -71,7 +71,7 @@ class AppController extends AbstractController
     /**
      * @Route("/order/pick", name="pickMeal")
      */
-    public function pickMeal()
+    public function pickMeal(Request $request)
     {
         return $this->render('app/pick.html.twig', []);
     }
@@ -87,11 +87,20 @@ class AppController extends AbstractController
     }
 
     /**
-     * @Route("/order/summary", name="summary")
+     * @Route("/order/summary", name="summary", methods={"GET", "POST"})
      */
-    public function summary(SessionInterface $session)
+    public function summary(SessionInterface $session, Request $request)
     {
         $address=$session->get('address');
+
+        /*if(!$address)
+        {
+            return $this->redirectToRoute('order', []);
+        }*/
+        $data=$request->get('json');
+        dump($data);
+        $data=json_decode($data);
+        dump($data);
 
         return $this->render('app/summary.html.twig', []);
     }

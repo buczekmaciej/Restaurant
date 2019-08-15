@@ -66,18 +66,16 @@ getJSON("/order/pick/json", function(err, data) {
     submit.appendChild(btntxt);
     organiser.appendChild(submit);
 
-    submit.addEventListener(
-      "click",
-      function() {
-        dataGet(data);
-      },
-      false
-    );
+    submit.addEventListener("click", function() {
+      if (confirm("Are you sure thats it?")) {
+        pickResult(data);
+      }
+    });
   }
 });
 
 // Order list creation
-function dataGet(data) {
+function pickResult(data) {
   var list = [];
 
   for (let item = 0; item < data.length; item++) {
@@ -95,5 +93,19 @@ function dataGet(data) {
       list.push(items);
     }
   }
-  console.log(list);
+
+  if (list != null) {
+    $.ajax({
+      type: "POST",
+      url: "/order/summary",
+      data: { json: list },
+      contentType: "application/json",
+      success: function() {
+        window.location = "/order/summary";
+      },
+      error: function(request, status, error) {
+        alert(status);
+      }
+    });
+  }
 }
