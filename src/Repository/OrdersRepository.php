@@ -19,6 +19,16 @@ class OrdersRepository extends ServiceEntityRepository
         parent::__construct($registry, Orders::class);
     }
 
+    public function checkOrder($id)
+    {
+        return $this->createQueryBuilder('o')
+        ->select('o.id, o.Status, o.createAt')
+        ->andWhere('o.id = :id')
+        ->setParameter('id', $id)
+        ->getQuery()
+        ->getResult();
+    }
+
     // /**
     //  * @return Orders[] Returns an array of Orders objects
     //  */

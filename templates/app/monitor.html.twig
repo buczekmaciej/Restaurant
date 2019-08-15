@@ -1,0 +1,20 @@
+{% extends "app/homepage.html.twig" %}
+
+{% block title %}
+    {{parent()}}
+    | Order:
+    {{order.id}}
+{% endblock %}
+
+{% block body %}
+    <article class="orderStatus">
+        <section class="status">
+            Status:
+            {{order.Status}}
+        </section>
+        <section class="create">
+            Order date:
+            {{order.createAt|date('D, M d Y, H:i')}}
+        </section>
+    </article>
+{% endblock %}

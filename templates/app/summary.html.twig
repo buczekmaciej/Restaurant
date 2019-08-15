@@ -6,4 +6,34 @@
     | Order summary
 {% endblock %}
 
-{% block body %}{% endblock %}
+{% block body %}
+    <article class="summary">
+        <section class="address">
+            <h1>Order address</h1>
+            <p>
+                <i class="fas fa-map-marker-alt"></i>
+                {{location}}</p>
+        </section>
+        <section class="list">
+            <h2>Order list</h2>
+            {% for meal in meals %}
+                <section class="mealCont">
+                    <h3 class="name">{{meal.0}}</h3>
+                    <p class="price-quant">
+                        <i class="fas fa-dollar-sign"></i>
+                        {{meal.1}}
+                        x
+                        {{meal.2}}
+                        =
+                        <i class="fas fa-dollar-sign"></i>
+                        {{meal.3}}</p>
+                </section>
+            {% endfor %}
+        </section>
+        <a href="{{path('proceed')}}">
+            <button>Submit order
+                <i class="fas fa-arrow-right"></i>
+            </button>
+        </a>
+    </article>
+{% endblock %}

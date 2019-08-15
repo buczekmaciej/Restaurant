@@ -1,7 +1,7 @@
 // JSON request
 var getJSON = function(url, callback) {
   var xhr = new XMLHttpRequest();
-  xhr.open("GET", url, true);
+  xhr.open("POST", url, true);
   xhr.responseType = "json";
   xhr.onload = function() {
     var status = xhr.status;
@@ -95,17 +95,10 @@ function pickResult(data) {
   }
 
   if (list != null) {
-    $.ajax({
-      type: "POST",
-      url: "/order/summary",
-      data: { json: list },
-      contentType: "application/json",
-      success: function() {
-        window.location = "/order/summary";
-      },
-      error: function(request, status, error) {
-        alert(status);
-      }
-    });
+    list = JSON.stringify(list);
+
+    fetch("/order/process/" + list, {}).then(
+      res => (window.location = "/order/process/" + list)
+    );
   }
 }

@@ -11,6 +11,8 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Entity\Orders;
+use App\Repository\OrdersRepository;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class AppController extends AbstractController
@@ -71,13 +73,13 @@ class AppController extends AbstractController
     /**
      * @Route("/order/pick", name="pickMeal")
      */
-    public function pickMeal(Request $request)
+    public function pickMeal()
     {
         return $this->render('app/pick.html.twig', []);
     }
 
     /**
-     * @Route("/order/pick/json", name="jsonMeal")
+     * @Route("/order/pick/json", name="jsonMeal", methods={"POST"})
      */
     public function jsonMeal(MealsRepository $mR)
     {
@@ -87,30 +89,95 @@ class AppController extends AbstractController
     }
 
     /**
-     * @Route("/order/summary", name="summary", methods={"GET", "POST"})
+     * @Route("/order/process/{data}", name="process")
+     */
+    public function process($data, SessionInterface $session)
+    {
+        if ($data != null) {
+            $data=explode('[', $data);
+            $obj=array();
+            foreach($data as $d)
+            {
+                if($d != null)
+                {
+                    $obj[]=str_replace(']','',$d);
+                }
+            }
+            $data=array();
+            foreach ($obj as $r) {
+                $data[]=str_replace('"',"",$r);
+            }
+            $result=array();
+            foreach($data as $d)
+            {
+                $result[]=explode(",",$d);
+            }
+            $session->set('list', $result);
+            
+            return $this->redirectToRoute('summary', []);
+        } else {
+            return $this->redirectToRoute('pickMeal', []);
+        }
+        
+    }
+
+    /**
+     * @Route("/order/summary", name="summary")
      */
     public function summary(SessionInterface $session, Request $request)
     {
         $address=$session->get('address');
+        $orderList=$session->get('list');
 
-        /*if(!$address)
+        if(!$address)
         {
             return $this->redirectToRoute('order', []);
-        }*/
-        $data=$request->get('json');
-        dump($data);
-        $data=json_decode($data);
-        dump($data);
+        }
+        if(!$orderList)
+        {
+            return $this->redirectToRoute('pickMeal', []);
+        }
 
-        return $this->render('app/summary.html.twig', []);
+        return $this->render('app/summary.html.twig', [
+            'location'=>$address,
+            'meals'=>$orderList
+        ]);
     }
 
     /**
      * @Route("/order/proceed", name="proceed")
      */
-    public function proceed()
+    public function proceed(SessionInterface $session, EntityManagerInterface $em)
     {
+        $address=$session->get('address');
+        $orderList=$session->get('list');
 
-        return $this->redirectToRoute('homepage', []);
+        if($address && $orderList)
+        {
+            $order=new Orders();
+            $order->setCreateAt(new \DateTime());
+            $order->setAddress($address);
+            $order->setOrderList($orderList);
+            $order->setStatus('Ordered');
+
+            $em->persist($order);
+            $em->flush();
+
+
+            $this->addFlash('success', 'Your order has been submitted');
+            return $this->redirectToRoute('homepage', []);
+        }
+    }
+
+    /**
+     * @Route("/order/{id}", name="monitor", requirements={"id"="\d+"})
+     */
+    public function monitor($id, OrdersRepository $oR)
+    {
+        $order=$oR->checkOrder($id)[0];
+
+        return $this->render('app/monitor.html.twig', [
+            'order'=>$order
+        ]);
     }
 }

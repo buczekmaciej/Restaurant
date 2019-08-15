@@ -31,6 +31,11 @@ class Orders
      */
     private $orderList = [];
 
+    /**
+     * @ORM\Column(type="string", length=25)
+     */
+    private $Status;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -68,6 +73,18 @@ class Orders
     public function setOrderList(array $orderList): self
     {
         $this->orderList = $orderList;
+
+        return $this;
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->Status;
+    }
+
+    public function setStatus(string $Status): self
+    {
+        $this->Status = $Status;
 
         return $this;
     }
