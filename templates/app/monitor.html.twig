@@ -7,14 +7,27 @@
 {% endblock %}
 
 {% block body %}
+    {% set statTitle = '' %}
+    {% if order.Status == 'Ordered' %}
+        {% set statTitle = 'Order passed to realization' %}
+    {% else %}
+        {% if order.Status == 'Processing' %}
+            {% set statTitle = 'Order is during realization' %}
+        {% else %}
+            {% set statTitle = 'Order has been delivered' %}
+        {% endif %}
+    {% endif %}
+
     <article class="orderStatus">
-        <section class="status">
-            Status:
-            {{order.Status}}
+        <section class="status" id="{{order.Status|lower}}">
+            <p title="{{statTitle}}">Status:
+                <span>{{order.Status}}</span>
+            </p>
         </section>
-        <section class="create">
-            Order date:
-            {{order.createAt|date('D, M d Y, H:i')}}
+        <section class="created">
+            <p>Order date:
+                <span>{{order.createAt|date('D, M d Y, H:i')}}</span>
+            </p>
         </section>
     </article>
 {% endblock %}

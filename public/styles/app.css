@@ -5,7 +5,7 @@
   text-decoration: none;
 }
 body {
-  background-color: rgrgb(235, 235, 235);
+  background-color: rgb(235, 235, 235);
 }
 .nav {
   width: 80%;
@@ -172,6 +172,102 @@ body {
 }
 
 /* Order */
+.order {
+  width: 80%;
+  margin: 3% auto;
+}
+.order form {
+  width: 90%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+}
+.order input {
+  width: 90%;
+  outline: none;
+  margin: 2% auto;
+  border-radius: 5px;
+  border: 1px solid red;
+  color: red;
+  font-size: 30px;
+  height: 60px;
+  padding: 8px;
+}
+.order input::placeholder {
+  color: red;
+}
+.order button {
+  margin: 1% auto;
+  width: 50%;
+  height: 50px;
+  border: 1px solid red;
+  border-radius: 5px;
+  cursor: pointer;
+  color: red;
+  font-size: 25px;
+  background-color: transparent;
+}
+
+/* Pick */
+.pickEm {
+  width: 90%;
+  margin: 2% auto;
+}
+.pickEm .items {
+  height: 600px;
+  overflow-y: auto;
+}
+.items .itemCont {
+  width: 25%;
+  height: 75px;
+  display: inline-block;
+  margin: 2% 4%;
+  border: 1px solid #000;
+  box-shadow: 0 0 5px 2px lightgray;
+  border-radius: 5px;
+  padding: 5px;
+}
+.itemCont .name,
+.itemCont .price {
+  display: inline-block;
+  font-size: 25px;
+}
+.itemCont .name {
+  width: 80%;
+}
+.itemCont .price {
+  float: right;
+  margin: 1%;
+  text-align: right;
+  width: 18%;
+}
+.price i {
+  color: green;
+  font-size: 22px;
+}
+.itemCont .counter {
+  display: inline-block;
+  width: 100%;
+  text-align: right;
+}
+.counter input {
+  outline: none;
+  border: none;
+  width: 15%;
+}
+.pickEm .proceed {
+  display: block;
+  float: right;
+  height: 50px;
+  font-size: 30px;
+  background-color: transparent;
+  color: red;
+  border: 1px solid red;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 1% 0;
+  width: 20%;
+}
 
 /* Summary */
 .summary {
@@ -209,7 +305,7 @@ body {
   height: 85px;
   margin: 1% 4%;
   border: 1px solid #000;
-  box-shadow: 0 0 10px 3px lightslategray;
+  box-shadow: 0 0 5px 1px lightslategray;
 }
 .mealCont h3 {
   font-size: 25px;
@@ -221,15 +317,59 @@ body {
 .mealCont p i {
   color: green;
 }
-.summary button {
-  width: 20%;
+.summary .foot {
+  display: block;
   float: right;
-  margin: 0 5%;
+  width: 20%;
+  text-align: center;
+}
+.foot button {
+  width: 90%;
   height: 50px;
   border-radius: 5px;
   border: 1px solid red;
   background-color: transparent;
   color: red;
   outline: none;
+  font-size: 20px;
   cursor: pointer;
+}
+
+.foot p {
+  font-size: 35px;
+  font-weight: bold;
+}
+.foot p i {
+  color: green;
+  font-size: 30px;
+}
+
+/* Monitor */
+.orderStatus {
+  width: 75%;
+  margin: auto;
+  padding: 15px;
+  text-align: center;
+  cursor: default;
+}
+.orderStatus .status {
+  font-size: 45px;
+  height: 100px;
+}
+.orderStatus #ordered span {
+  color: red;
+}
+.orderStatus #processing span {
+  color: yellow;
+}
+.orderStatus #delivered span {
+  color: green;
+}
+.orderStatus .created {
+  font-size: 30px;
+  height: 100px;
+  text-align: center;
+}
+.created span {
+  color: rgb(150, 110, 110);
 }

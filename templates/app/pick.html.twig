@@ -1,7 +1,16 @@
 {% extends "base.html.twig" %}
 
+{% block title %}Johnny's | Pick meal
+{% endblock %}
+
+{% block stylesheets %}
+    <link href="{{asset('styles/app.css')}}" rel="stylesheet">
+{% endblock %}
+
 {% block body %}
-    <article class="pickEm" id="pick"></article>
+    <article class="pickEm" id="mainPick">
+        <section class="items" id="pick"></section>
+    </article>
 {% endblock %}
 
 {% block javascripts %}

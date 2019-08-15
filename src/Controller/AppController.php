@@ -138,9 +138,17 @@ class AppController extends AbstractController
             return $this->redirectToRoute('pickMeal', []);
         }
 
+        $total = 0;
+
+        foreach($orderList as $ol)
+        {
+            $total+=$ol[3];
+        }
+
         return $this->render('app/summary.html.twig', [
             'location'=>$address,
-            'meals'=>$orderList
+            'meals'=>$orderList,
+            'total'=>$total
         ]);
     }
 
@@ -164,7 +172,12 @@ class AppController extends AbstractController
             $em->flush();
 
 
-            $this->addFlash('success', 'Your order has been submitted');
+            $session->remove('address');
+            $session->remove('list');
+
+            $link = $this->generateUrl('monitor',['id'=>$order->getId()]);
+
+            $this->addFlash('success', sprintf('Your order has been submitted. You can check it <a href="%s">here</a>', $link));
             return $this->redirectToRoute('homepage', []);
         }
     }

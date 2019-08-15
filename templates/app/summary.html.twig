@@ -30,10 +30,16 @@
                 </section>
             {% endfor %}
         </section>
-        <a href="{{path('proceed')}}">
-            <button>Submit order
-                <i class="fas fa-arrow-right"></i>
-            </button>
-        </a>
+        <section class="foot">
+            <p>Total:
+                {{total}}
+                <i class="fas fa-dollar-sign"></i>
+            </p>
+            <a href="{{path('proceed')}}">
+                <button>Submit order
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+            </a>
+        </section>
     </article>
 {% endblock %}
