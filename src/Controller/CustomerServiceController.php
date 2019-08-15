@@ -33,11 +33,19 @@ class CustomerServiceController extends AbstractController
     }
 
     /**
+     * @Route("/employee", name="eHomepage")
+     */
+    public function eHomepage()
+    {
+        return $this->render('customer_service/homepage.html.twig', []);
+    }
+
+    /**
      * @Route("/employee/meals", name="eMeals")
      */
     public function eMeals(MealsRepository $mR)
     {
-        $meals=$mR->findAll();
+        $meals=$mR->findBy(array(),array('Type'=>'ASC'));
         return $this->render('customer_service/meals.html.twig', [
             'meals'=>$meals
         ]);

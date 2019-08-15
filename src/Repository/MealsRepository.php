@@ -33,6 +33,7 @@ class MealsRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('m')
             ->select('m.Name, m.Price')
+            ->orderBy('m.Type', 'ASC')
             ->getQuery()
             ->getResult()
         ;

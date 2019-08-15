@@ -1,0 +1,40 @@
+{% extends "customer_service/homepage.html.twig" %}
+
+{% block extra %}
+    -> Meals
+{% endblock %}
+
+{% block body %}
+    <article class="eMeals">
+        <a href="{{path('newMeal')}}">
+            <button>
+                <i class="fas fa-plus"></i>
+                Create meal</button>
+        </a>
+        {% for meal in meals %}
+            <section class="eMeal" id="{{meal.Name}}">
+                <p class='name'>{{meal.Name}}</p>
+                <p class="price">
+                    <i class="fas fa-dollar-sign"></i>
+                    {{meal.Price}}</p>
+                <p class="type">{{meal.Type}}</p>
+                <p class="ingredients">
+                    {% for ingr in meal.Ingredients %}
+                        {{ingr.Name}}
+                        {% if loop.last == false %}
+                            ,
+                        {% endif %}
+                    {% endfor %}
+                </p>
+                <section class="links">
+                    <a href="">
+                        <i class="far fa-edit"></i>
+                    </a>
+                    <a href="">
+                        <i class="fas fa-trash-alt"></i>
+                    </a>
+                </section>
+            </section>
+        {% endfor %}
+    </article>
+{% endblock %}

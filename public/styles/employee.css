@@ -1,0 +1,99 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+}
+body {
+  background-color: rgb(235, 235, 235);
+}
+.employee {
+  width: 60%;
+  margin: 10% auto;
+}
+.employee section {
+  margin: 5% auto;
+  text-align: center;
+}
+.employee button {
+  width: 75%;
+  margin: auto;
+  height: 55px;
+  border: 1px solid red;
+  color: red;
+  background-color: transparent;
+  border-radius: 5px;
+  outline: none;
+  font-size: 35px;
+  cursor: pointer;
+  transition: 0.5s ease-in-out;
+}
+.employee button:hover {
+  color: #fff;
+  background-color: red;
+  border: none;
+  animation: 0.3s scale;
+}
+
+@keyframes scale {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Meals */
+.eMeals {
+  width: 80%;
+  margin: 1.5% auto;
+  text-align: center;
+}
+.eMeals button {
+  color: red;
+  background-color: transparent;
+  border: 1px solid red;
+  border-radius: 5px;
+  outline: none;
+  width: 50%;
+  height: 55px;
+  font-size: 30px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.eMeals .eMeal {
+  width: 80%;
+  height: 80px;
+  margin: 2% auto;
+  display: flex;
+  border: 1px solid #000;
+  border-radius: 5px;
+  padding: 22px 15px;
+  font-size: 28px;
+}
+.eMeal p {
+  flex: 1;
+}
+.eMeal .price {
+  font-weight: bold;
+}
+.eMeal .price i {
+  color: green;
+  font-size: 23px;
+}
+.eMeal p:last-of-type {
+  font-size: 18px;
+}
+.eMeal section {
+  flex: 0.5;
+}
+.fa-edit {
+  color: blue;
+}
+.fa-trash-alt {
+  color: red;
+}
