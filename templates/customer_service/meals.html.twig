@@ -1,7 +1,17 @@
 {% extends "customer_service/homepage.html.twig" %}
 
 {% block extra %}
-    -> Meals
+    | Meals
+{% endblock %}
+
+{% block nav %}
+    <article class="nav">
+        <section class="link">
+            <a href="{{path('eHomepage')}}">
+                <i class="fas fa-arrow-left"></i>
+                Back</a>
+        </section>
+    </article>
 {% endblock %}
 
 {% block body %}
@@ -27,10 +37,10 @@
                     {% endfor %}
                 </p>
                 <section class="links">
-                    <a href="">
+                    <a href="{{path('editMeal',{'id': meal.id})}}">
                         <i class="far fa-edit"></i>
                     </a>
-                    <a href="">
+                    <a href="{{path('removeMeal',{'id': meal.id})}}">
                         <i class="fas fa-trash-alt"></i>
                     </a>
                 </section>

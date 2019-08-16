@@ -108,7 +108,7 @@ body {
 }
 .menu {
   height: 650px;
-  overflow-y: scroll;
+  overflow-y: auto;
   padding: 15px;
 }
 .menu > section {

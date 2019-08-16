@@ -5,6 +5,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use App\Entity\Meals;
@@ -16,14 +17,6 @@ use App\Repository\MealsRepository;
 
 class CustomerServiceController extends AbstractController
 {
-    /**
-     * @Route("/employee/login", name="login")
-     */
-    public function login()
-    {
-        return $this->render('customer_service/login.html.twig', []);
-    }
-
     /**
      * @Route("/employee/logout", name="logout")
      */
@@ -105,11 +98,67 @@ class CustomerServiceController extends AbstractController
     }
 
     /**
-     * @Route("/employee/meal/{id}", name="removeMeal")
+     * @Route("/employee/{id}/remove", name="removeMeal")
      */
-    public function removeMeal(EntityManagerInterface $em)
+    public function removeMeal(EntityManagerInterface $em, $id, MealsRepository $mR)
     {
+        $meal=$mR->findBy(['id'=>$id])[0];
+        $em->remove($meal);
+        $em->flush();
+
+        $this->addFlash('primary', 'Meal has been removed');
         return $this->redirectToRoute('eMeals', []);
+    }
+
+    /**
+     * @Route("/employee/{id}/edit", name="editMeal")
+     */
+    public function editMeal($id, MealsRepository $mR, EntityManagerInterface $em, Request $request)
+    {
+        $meal=$mR->findBy(['id'=>$id])[0];
+
+        $edit=$this->createFormBuilder()
+        ->add('Name',TextType::class, [
+            'attr'=>['placeholder'=>'Meal name', 'value'=>$meal->getName()]
+        ])
+        ->add('Price',NumberType::class, [
+            'attr'=>['placeholder'=>'Meal price', 'value'=>$meal->getPrice()]
+        ])
+        ->add('Type',TextType::class, [
+            'attr'=>['placeholder'=>'Meal type', 'value'=>$meal->getType()]
+        ])
+        ->add('Ingredients',EntityType::class, [
+            'class'=>Ingredients::class,
+            'choice_label'=>'Name',
+            'expanded'=>true,
+            'multiple'=>true
+        ])
+        ->add('Submit',SubmitType::class)
+        ->getForm();
+
+        $edit->handleRequest($request);
+        if($edit->isSubmitted() && $edit->isValid())
+        {
+            $data=$edit->getData();
+            $meal->setName($data['Name']);
+            $meal->setPrice($data['Price']);
+            $meal->setType($data['Type']);
+            $meal->clearIngr();
+            foreach($data['Ingredients'] as $ing)
+            {
+                $meal->addIngredient($ing);
+            }
+
+            $em->flush();
+            $this->addFlash('success', 'Meal has been edited');
+            return $this->redirectToRoute('eMeals', []);
+        }
+
+        return $this->render('customer_service/editMeal.html.twig', [
+            'id'=>$id,
+            'edit'=>$edit->createView(),
+            'meal'=>$meal
+        ]);
     }
 
     /**

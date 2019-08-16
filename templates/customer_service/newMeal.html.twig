@@ -1,8 +1,17 @@
 {% extends "customer_service/homepage.html.twig" %}
 
-{% block title %}Meal create
+{% block title %}| New meal
 {% endblock %}
 
+{% block nav %}
+    <article class="nav">
+        <section class="link">
+            <a href="{{path('eMeals')}}">
+                <i class="fas fa-arrow-left"></i>
+                Back</a>
+        </section>
+    </article>
+{% endblock %}
 
 {% block body %}
     <article class="form">

@@ -1,0 +1,40 @@
+{% extends "customer_service/homepage.html.twig" %}
+
+{% block extra %}
+    | Edit
+{% endblock %}
+
+{% block nav %}
+    <article class="nav">
+        <section class="link">
+            <a href="{{path('eMeals')}}">
+                <i class="fas fa-arrow-left"></i>
+                Back</a>
+        </section>
+    </article>
+{% endblock %}
+
+{% block body %}
+    <article class="edit">
+        {% set ifcheck = false %}
+        {{form_start(edit)}}
+        {{form_widget(edit.Name)}}
+        {{form_widget(edit.Price)}}
+        {{form_widget(edit.Type)}}
+        <section id="form_Ingr">
+            {% for ingredient in edit.Ingredients %}
+                {% set ifcheck = false %}
+                {% set ind = loop.index %}
+                {% for ingr in meal.Ingredients %}
+                    {% if ingr.Name == edit.children.Ingredients.children[ind].vars.label %}
+                        {% set ifcheck = true %}
+                    {% endif %}
+                {% endfor %}
+                {{form_widget(ingredient, {'attr':{'checked': ifcheck}})}}
+                {{form_label(ingredient)}}
+            {% endfor %}
+        </section>
+        {{form_widget(edit.Submit)}}
+        {{form_end(edit)}}
+    </article>
+{% endblock %}

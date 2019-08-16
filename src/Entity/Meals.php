@@ -98,6 +98,11 @@ class Meals
         return $this;
     }
 
+    public function clearIngr()
+    {
+        $this->getIngredients()->clear();
+    }
+
     public function getType(): ?string
     {
         return $this->Type;
