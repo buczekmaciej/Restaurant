@@ -5,6 +5,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -23,7 +24,7 @@ class CustomerServiceController extends AbstractController
     /**
      * @Route("/employee/login", name="eLogin") 
      */
-    public function login(SessionInterface $session)
+    public function login(SessionInterface $session, Request $request, EmployeesRepository $eR)
     {
         $logged=$session->get('worker');
         if($logged)
@@ -31,7 +32,54 @@ class CustomerServiceController extends AbstractController
             return $this->redirectToRoute('eHomepage', []);
         }
 
-        return $this->render('customer_service/login.html.twig', []);
+        $login=$this->createFormBuilder()
+        ->add('Username', TextType::class,['attr'=>['placeholder'=>'Username']])
+        ->add('Password', PasswordType::class, ['attr'=>['placeholder'=>'Password']])
+        ->add('Login', SubmitType::class)
+        ->getForm();
+
+        $login->handleRequest($request);
+        if($login->isSubmitted() && $login->isValid())
+        {
+            $data=$login->getData();
+
+            $employee=$eR->findBy(['Login'=>$data['Username']]);
+
+            if($employee){
+                if($employee[0]->getPassword() === $data['Password']){
+                    $session->set('worker', $employee[0]);
+
+                    $this->addFlash('success', 'You were successfully logged in');
+                    return $this->redirectToRoute('eHomepage', []);
+                }
+                else{
+                    $this->addFlash('danger', 'Password is incorrect');
+                }
+            }
+            else{
+                $this->addFlash('danger', 'There is no such user');
+            }
+        }
+
+        return $this->render('customer_service/login.html.twig', [
+            'login'=>$login->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/employee/logout", name="eLogout")
+     */
+    public function logout(SessionInterface $sesion)
+    {
+        $logged=$session->get('worker');
+        if(!$logged)
+        {
+            return $this->redirectToRoute('eLogin', []);
+        }
+
+        $session->remove('worker');
+
+        return $this->redirectToRoute('eLogin', []);
     }
 
     /**
@@ -44,8 +92,12 @@ class CustomerServiceController extends AbstractController
         {
             return $this->redirectToRoute('eLogin', []);
         }
+
+        $fName=explode(' ',$logged)[0];
         
-        return $this->render('customer_service/homepage.html.twig', []);
+        return $this->render('customer_service/homepage.html.twig', [
+            'name'=>$fName
+        ]);
     }
 
     /**

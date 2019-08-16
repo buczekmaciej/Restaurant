@@ -21,6 +21,9 @@
 
 {% block body %}
     <article class="employee">
+        <p>Hello,
+            {{name}}
+            [<a href="{{path('eLogout')}}">Logout</a>]</p>
         <section class="ings">
             <a href="{{path('ingredients')}}">
                 <button>Ingredients</button>

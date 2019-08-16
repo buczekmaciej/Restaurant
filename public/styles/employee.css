@@ -20,6 +20,13 @@ body {
   width: 60%;
   margin: 10% auto;
 }
+.employee > p {
+  font-size: 30px;
+  text-align: center;
+}
+.employee > p > a {
+  color: red;
+}
 .employee section {
   margin: 5% auto;
   text-align: center;
@@ -53,6 +60,12 @@ body {
   100% {
     transform: scale(1);
   }
+}
+
+.login .form p {
+  font-size: 45px;
+  text-align: center;
+  font-weight: bold;
 }
 
 /* Meals */

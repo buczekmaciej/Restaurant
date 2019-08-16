@@ -3,4 +3,15 @@
 {% block extra %}| Login
 {% endblock %}
 
-{% block body %}{% endblock %}
+{% block body %}
+    <article class="login">
+        <section class="form">
+            <p>Login</p>
+            {{form_start(login)}}
+            {{form_widget(login.Username)}}
+            {{form_widget(login.Password)}}
+            {{form_widget(login.Login)}}
+            {{form_end(login)}}
+        </section>
+    </article>
+{% endblock %}
