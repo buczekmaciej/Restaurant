@@ -1,6 +1,16 @@
 {% extends "customer_service/homepage.html.twig" %}
 
-{% block title %}New ingredient
+{% block extra %}| New ingredient
+{% endblock %}
+
+{% block nav %}
+    <article class="nav">
+        <section class="link">
+            <a href="{{path('ingredients')}}">
+                <i class="fas fa-arrow-left"></i>
+                Back</a>
+        </section>
+    </article>
 {% endblock %}
 
 {% block body %}

@@ -14,30 +14,51 @@ use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\IngredientsRepository;
 use App\Repository\MealsRepository;
+use App\Repository\OrdersRepository;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use App\Repository\EmployeesRepository;
 
 class CustomerServiceController extends AbstractController
 {
     /**
-     * @Route("/employee/logout", name="logout")
+     * @Route("/employee/login", name="eLogin") 
      */
-    public function logout()
+    public function login(SessionInterface $session)
     {
-        return $this->redirectToRoute('login', []);
+        $logged=$session->get('worker');
+        if($logged)
+        {
+            return $this->redirectToRoute('eHomepage', []);
+        }
+
+        return $this->render('customer_service/login.html.twig', []);
     }
 
     /**
      * @Route("/employee", name="eHomepage")
      */
-    public function eHomepage()
+    public function eHomepage(SessionInterface $session)
     {
+        $logged=$session->get('worker');
+        if(!$logged)
+        {
+            return $this->redirectToRoute('eLogin', []);
+        }
+        
         return $this->render('customer_service/homepage.html.twig', []);
     }
 
     /**
      * @Route("/employee/meals", name="eMeals")
      */
-    public function eMeals(MealsRepository $mR)
+    public function eMeals(MealsRepository $mR, SessionInterface $session)
     {
+        $logged=$session->get('worker');
+        if(!$logged)
+        {
+            return $this->redirectToRoute('eLogin', []);
+        }
+
         $meals=$mR->findBy(array(),array('Type'=>'ASC'));
         return $this->render('customer_service/meals.html.twig', [
             'meals'=>$meals
@@ -47,8 +68,14 @@ class CustomerServiceController extends AbstractController
     /**
      * @Route("/employee/m/new", name="newMeal")
      */
-    public function newMeal(EntityManagerInterface $em, Request $request, MealsRepository $mR)
+    public function newMeal(EntityManagerInterface $em, Request $request, MealsRepository $mR, SessionInterface $session)
     {
+        $logged=$session->get('worker');
+        if(!$logged)
+        {
+            return $this->redirectToRoute('eLogin', []);
+        }
+
         $new=$this->createFormBuilder()
         ->add('Name', TextType::class,['attr'=>['placeholder'=>'Meal name']])
         ->add('Price', TextType::class, ['attr'=>['placeholder'=>'Meal price']])
@@ -100,8 +127,14 @@ class CustomerServiceController extends AbstractController
     /**
      * @Route("/employee/{id}/remove", name="removeMeal")
      */
-    public function removeMeal(EntityManagerInterface $em, $id, MealsRepository $mR)
+    public function removeMeal(EntityManagerInterface $em, $id, MealsRepository $mR, SessionInterface $session)
     {
+        $logged=$session->get('worker');
+        if(!$logged)
+        {
+            return $this->redirectToRoute('eLogin', []);
+        }
+
         $meal=$mR->findBy(['id'=>$id])[0];
         $em->remove($meal);
         $em->flush();
@@ -113,8 +146,14 @@ class CustomerServiceController extends AbstractController
     /**
      * @Route("/employee/{id}/edit", name="editMeal")
      */
-    public function editMeal($id, MealsRepository $mR, EntityManagerInterface $em, Request $request)
+    public function editMeal($id, MealsRepository $mR, EntityManagerInterface $em, Request $request, SessionInterface $session)
     {
+        $logged=$session->get('worker');
+        if(!$logged)
+        {
+            return $this->redirectToRoute('eLogin', []);
+        }
+
         $meal=$mR->findBy(['id'=>$id])[0];
 
         $edit=$this->createFormBuilder()
@@ -164,32 +203,82 @@ class CustomerServiceController extends AbstractController
     /**
      * @Route("/employee/orders", name="eOrders")
      */
-    public function eOrders()
+    public function eOrders(OrdersRepository $oR, SessionInterface $session)
     {
-        return $this->render('customer_service/orders.html.twig', []);
-    }
-    
-    /**
-     * @Route("/employee/o/new", name="newOrder")
-     */
-    public function newOrder(EntityManagerInterface $em, Request $request)
-    {
-        return $this->render('customer_service/newOrder.html.twig', []);
+        $logged=$session->get('worker');
+        if(!$logged)
+        {
+            return $this->redirectToRoute('eLogin', []);
+        }
+
+        $orders=$oR->findBy(array(),array('createAt'=>'DESC'));
+        
+        return $this->render('customer_service/orders.html.twig', [
+            'orders'=>$orders
+        ]);
     }
 
     /**
-     * @Route("/employee/order/{id}", name="removeOrder")
+     * @Route("/employee/o/{id}/{elem}", name="modOrder", requirements={"id"="\d+"})
      */
-    public function removeOrder(EntityManagerInterface $em)
+    public function modOrder(EntityManagerInterface $em, $id, $elem, OrdersRepository $oR, SessionInterface $session)
     {
+        $logged=$session->get('worker');
+        if(!$logged)
+        {
+            return $this->redirectToRoute('eLogin', []);
+        }
+
+        $order=$oR->findBy(['id'=>$id])[0];
+
+        if ($elem == 'processing') {
+            $order->setStatus('Processing');
+            $em->flush();
+            $this->addFlash('primary', 'Current status has been changed on `Processing`');
+        }
+        else if ($elem == 'delivered') {
+            $order->setStatus('Delivered');
+            $em->flush();
+            $this->addFlash('primary', 'Current status has been changed on `Delivered`');
+        }
+        else
+        {
+            $this->addFlash('danger', 'Something went wrong');
+            return $this->redirectToRoute('eOrders', []);
+        }
+        return $this->redirectToRoute('eOrders', []);
+    }
+
+    /**
+     * @Route("/employee/o/remove/{id}", name="removeOrder")
+     */
+    public function removeOrder($id, EntityManagerInterface $em, OrdersRepository $oR, SessionInterface $session)
+    {
+        $logged=$session->get('worker');
+        if(!$logged)
+        {
+            return $this->redirectToRoute('eLogin', []);
+        }
+
+        $order=$oR->findBy(['id'=>$id])[0];
+        $em->remove($order);
+        $em->flush();
+
+        $this->addFlash('success', 'Order has beem removed');
         return $this->redirectToRoute('eOrders', []);
     }
 
     /**
      * @Route("/employee/ingredients", name="ingredients")
      */
-    public function ingredients(IngredientsRepository $iR)
+    public function ingredients(IngredientsRepository $iR, SessionInterface $session)
     {
+        $logged=$session->get('worker');
+        if(!$logged)
+        {
+            return $this->redirectToRoute('eLogin', []);
+        }
+
         $ings=$iR->findBy(array(),array('Name'=>'ASC'));
         return $this->render('customer_service/ingredients.html.twig', [
             'ings'=>$ings
@@ -199,8 +288,14 @@ class CustomerServiceController extends AbstractController
     /**
      * @Route("/employee/i/new", name="newIngredients")
      */
-    public function newIngredients(EntityManagerInterface $em, Request $request, IngredientsRepository $iR)
+    public function newIngredients(EntityManagerInterface $em, Request $request, IngredientsRepository $iR, SessionInterface $session)
     {
+        $logged=$session->get('worker');
+        if(!$logged)
+        {
+            return $this->redirectToRoute('eLogin', []);
+        }
+
         $new=$this->createFormBuilder()
         ->add('Name', TextType::class,['attr'=>['placeholder'=>'Ingredient name']])
         ->add('Insert', SubmitType::class)

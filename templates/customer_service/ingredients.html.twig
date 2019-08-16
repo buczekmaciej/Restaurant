@@ -1,0 +1,29 @@
+{% extends "customer_service/homepage.html.twig" %}
+
+{% block extra %}| Ingredients
+{% endblock %}
+
+{% block nav %}
+    <article class="nav">
+        <section class="link">
+            <a href="{{path('eHomepage')}}">
+                <i class="fas fa-arrow-left"></i>
+                Back</a>
+        </section>
+    </article>
+{% endblock %}
+
+{% block body %}
+    <article class="ingredients">
+        <a href="{{path('newIngredients')}}">
+            <button>
+                <i class="fas fa-plus"></i>
+                Create new ingredient</button>
+        </a>
+        {% for ing in ings %}
+            <section class="item" id="ing-{{ing.id}}">
+                <p>{{ing.Name}}</p>
+            </section>
+        {% endfor %}
+    </article>
+{% endblock %}

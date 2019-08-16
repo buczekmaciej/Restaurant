@@ -1,5 +1,71 @@
 {% extends "customer_service/homepage.html.twig" %}
 
 {% block extra %}
-    -> Orders
+    | Orders
+{% endblock %}
+
+{% block refresh %}
+    <meta content="60" http-equiv="refresh">
+{% endblock %}
+
+{% block nav %}
+    <article class="nav">
+        <section class="link">
+            <a href="{{path('eHomepage')}}">
+                <i class="fas fa-arrow-left"></i>
+                Back</a>
+        </section>
+    </article>
+{% endblock %}
+
+{% block body %}
+    <article class="orders">
+        {% for order in orders %}
+            <section class="item" id="order-{{order.id}}">
+                <p class="address">
+                    <i class="fas fa-map-marker-alt"></i>
+                    {{order.Address}}</p>
+                <p class="created">
+                    <i class="fas fa-calendar-alt"></i>
+                    {{order.createAt|date('F d, Y')}}</p>
+                <div class="list">
+                    <p>
+                        <i class="fas fa-question-circle"></i>
+                    </p>
+                    <div class="drop-order">
+                        {% for element in order.orderList %}
+                            <p>
+                                <span class="name">{{element[0]}}</span>
+                                <span class="quantity">x
+                                    {{element[2]}}</span>
+                            </p>
+                        {% endfor %}
+                    </div>
+                </div>
+                <p class="status" id="{{order.Status|lower}}">
+                    <i class="fas fa-info-circle"></i>
+                    {{order.Status}}
+                </p>
+                <span class="order-link">
+                    <p class="new-status">
+                        {% if order.Status == 'Ordered' %}
+                            <a href="{{path('modOrder', {'id':order.id, 'elem':'processing'})}}">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                        {% endif %}
+                        {% if order.Status == 'Processing' %}
+                            <a href="{{path('modOrder', {'id':order.id, 'elem':'delivered'})}}">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                        {% endif %}
+                    </p>
+                    <p class="remove">
+                        <a href="{{path('removeOrder',{'id':order.id})}}">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                    </p>
+                </span>
+            </section>
+        {% endfor %}
+    </article>
 {% endblock %}
