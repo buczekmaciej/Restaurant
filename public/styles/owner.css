@@ -1,0 +1,103 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+}
+body {
+  background-color: rgb(32, 31, 31);
+  color: #fff;
+}
+.nav {
+  font-size: 35px;
+  font-weight: bold;
+  margin: 1%;
+}
+.nav a {
+  color: #fff;
+}
+
+.form {
+  width: 85%;
+  margin: 2% auto;
+  min-height: 250px;
+}
+.form form {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  margin: auto;
+}
+.form input {
+  width: 90%;
+  margin: 2% auto;
+  height: 50px;
+  font-size: 25px;
+  border: 1px solid red;
+  border-radius: 5px;
+  background-color: transparent;
+  color: #fff;
+  padding: 10px;
+  outline: none;
+}
+.form input::placeholder {
+  color: #fff;
+}
+
+.form button {
+  cursor: pointer;
+  width: 50%;
+  margin: 2% auto;
+  height: 45px;
+  border: none;
+  color: #fff;
+  background-color: red;
+  border-radius: 5px;
+  font-size: 30px;
+}
+
+.employees {
+  width: 80%;
+  margin: 2% auto;
+  text-align: center;
+}
+.employees .employee {
+  width: 85%;
+  height: 60px;
+  border: 1px solid #fff;
+  border-radius: 5px;
+  margin: 2% auto;
+  display: flex;
+  padding-top: 15px;
+}
+.employees .employee > p {
+  flex: 1;
+  margin-left: 3%;
+  font-size: 25px;
+}
+.employees .employee > p:last-of-type {
+  flex: 0.3;
+}
+
+.fa-trash-alt {
+  color: red;
+}
+
+.employees button {
+  color: #fff;
+  background-color: transparent;
+  border: 1px solid red;
+  border-radius: 5px;
+  outline: none;
+  width: 50%;
+  height: 55px;
+  font-size: 30px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+
+.employees button:hover {
+  background-color: red;
+  border: none;
+}

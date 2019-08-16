@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use App\Entity\Meals;
 use App\Entity\Ingredients;
+use App\Entity\Employees;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\IngredientsRepository;
@@ -385,24 +386,66 @@ class CustomerServiceController extends AbstractController
     /**
      * @Route("/owner/employees", name="employees")
      */
-    public function employees()
+    public function employees(EmployeesRepository $eR)
     {
-        return $this->render('owner/employees.html.twig', []);
+        $employees=$eR->findBy(array(),array('Name'=>'ASC'));
+        return $this->render('owner/employees.html.twig', [
+            'employees'=>$employees
+        ]);
     }
     
     /**
      * @Route("/owner/e/new", name="newEmployee")
      */
-    public function newEmployee(EntityManagerInterface $em, Request $request)
+    public function newEmployee(EntityManagerInterface $em, Request $request, EmployeesRepository $eR)
     {
-        return $this->render('owner/newEmployee.html.twig', []);
+        $new=$this->createFormBuilder()
+        ->add('Username', TextType::class,['attr'=>['placeholder'=>'Username']])
+        ->add('Password', PasswordType::class,['attr'=>['placeholder'=>'Password']])
+        ->add('Name',TextType::class,['attr'=>['placeholder'=>'Worker name']])
+        ->add('Insert', SubmitType::class)
+        ->getForm();
+
+        $new->handleRequest($request);
+        if($new->isSubmitted() && $new->isValid())
+        {
+            $data=$new->getData();
+
+            $taken=$eR->findBy(['Login'=>$data['Username']]);
+            if(!$taken)
+            {
+                $worker=new Employees();
+                $worker->setLogin($data['Username']);
+                $worker->setPassword($data['Password']);
+                $worker->setName($data['Name']);
+
+                $em->persist($worker);
+                $em->flush();
+
+                $this->addFlash('success','New employee has been created');
+                return $this->redirectToRoute('employees', []);
+            }
+            else
+            {
+                $this->addFlash('danger', 'This username is already taken');
+            }
+        }
+
+        return $this->render('owner/newEmployee.html.twig', [
+            'new'=>$new->createView()
+        ]);
     }
 
     /**
      * @Route("/owner/employee/{id}", name="removeEmployee")
      */
-    public function removeEmployee(EntityManagerInterface $em)
+    public function removeEmployee(EntityManagerInterface $em, EmployeesRepository $eR, $id)
     {
+        $worker=$eR->findBy(['id'=>$id])[0];
+        $em->remove($worker);
+        $em->flush();
+
+        $this->addflash('success', 'Worker has been successfully removed');
         return $this->redirectToRoute('employees', []);
     }
 }

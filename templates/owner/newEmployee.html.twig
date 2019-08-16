@@ -1,0 +1,41 @@
+{% extends "base.html.twig" %}
+{% block title %}Johnny's | Owner
+    {% block extra %}| New employee
+    {% endblock %}
+{% endblock %}
+
+{% block stylesheets %}
+    {{parent()}}
+    <link href="{{asset('styles/owner.css')}}" rel="stylesheet">
+{% endblock %}
+
+{% block nav %}
+    <article class="nav">
+        <section class="link">
+            <a href="{{path('employees')}}">
+                <i class="fas fa-arrow-left"></i>
+                Back</a>
+        </section>
+    </article>
+{% endblock %}
+
+{% block flash %}
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert alert-{{label}}">
+                {{message|raw}}
+            </div>
+        {% endfor %}
+    {% endfor %}
+{% endblock %}
+
+{% block body %}
+    <article class="form">
+        {{form_start(new)}}
+        {{form_widget(new.Username)}}
+        {{form_widget(new.Password)}}
+        {{form_widget(new.Name)}}
+        {{form_widget(new.Insert)}}
+        {{form_end(new)}}
+    </article>
+{% endblock %}

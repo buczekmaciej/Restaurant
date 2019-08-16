@@ -1,0 +1,54 @@
+{% extends "base.html.twig" %}
+{% block title %}Johnny's | Owner
+    {% block extra %}| Employees
+    {% endblock %}
+{% endblock %}
+
+{% block stylesheets %}
+    {{parent()}}
+    <link href="{{asset('styles/owner.css')}}" rel="stylesheet">
+{% endblock %}
+
+{% block flash %}
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert alert-{{label}}">
+                {{message|raw}}
+            </div>
+        {% endfor %}
+    {% endfor %}
+{% endblock %}
+
+{% block body %}
+    <article class="employees">
+        <a href="{{path('newEmployee')}}">
+            <button>
+                <i class="fas fa-plus"></i>
+                Create new employee
+            </button>
+        </a>
+        {% for employee in employees %}
+            <section class="employee" id="{{employee.id}}">
+                <p class="login">
+                    <i class="fas fa-user"></i>
+                    {{employee.Login}}
+                </p>
+                <p class="password">
+                    <i class="fas fa-lock"></i>
+                    {% for i in range(1, employee.Password|length) %}
+                        *
+                    {% endfor %}
+                </p>
+                <p class="name">
+                    <i class="fas fa-id-badge"></i>
+                    {{employee.Name}}
+                </p>
+                <p class="remove">
+                    <a href="{{path('removeEmployee',{'id':employee.id})}}">
+                        <i class="fas fa-trash-alt"></i>
+                    </a>
+                </p>
+            </section>
+        {% endfor %}
+    </article>
+{% endblock %}
