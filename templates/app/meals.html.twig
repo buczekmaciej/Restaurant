@@ -7,17 +7,17 @@
 
 
 {% block body %}
-    <article class="menuContainer">
+    <main class="menuContainer">
         {% if types is not empty and meals is not empty %}
             <section class="menu">
                 {% for type in types %}
-                    <section class="{{type.Type}}">
+                    <div class="{{type.Type}}">
                         <h3>{{type.Type}}</h3>
 
                         {% for meal in meals %}
                             {% for product in meal %}
                                 {% if product.Type == type.Type %}
-                                    <section class="meal">
+                                    <div class="meal">
                                         <p>
                                             <span>{{product.Name}}</span>
                                             <span>
@@ -32,11 +32,11 @@
                                                 {% endif %}
                                             {% endfor %}
                                         </p>
-                                    </section>
+                                    </div>
                                 {% endif %}
                             {% endfor %}
                         {% endfor %}
-                    </section>
+                    </div>
                 {% endfor %}
             </section>
         {% else %}
@@ -45,5 +45,5 @@
                 <p>We are working on it stay tuned!</p>
             </section>
         {% endif %}
-    </article>
+    </main>
 {% endblock %}

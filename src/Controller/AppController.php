@@ -45,7 +45,7 @@ class AppController extends AbstractController
     }
 
     /**
-     * @Route("/order", name="order")
+     * @Route("/make-order", name="order")
      */
     public function order(EntityManagerInterface $em, Request $request, SessionInterface $session)
     {
@@ -183,14 +183,42 @@ class AppController extends AbstractController
     }
 
     /**
-     * @Route("/order/{id}", name="monitor", requirements={"id"="\d+"})
+     * @Route("/check-order", name="checkOrder")
+     * @Route("/order/{id}", name="monitor")
      */
-    public function monitor($id, OrdersRepository $oR)
+    public function monitor(OrdersRepository $oR, Request $request)
     {
-        $order=$oR->checkOrder($id)[0];
+        $id = $request->get('id');
 
-        return $this->render('app/monitor.html.twig', [
-            'order'=>$order
-        ]);
+        if ($id) {
+            if (intval($id)) {
+                $order=$oR->checkOrder($id)[0];
+
+                return $this->render('app/monitor.html.twig', [
+                    'order'=>$order
+                ]);
+            } else {
+                return $this->redirectToRoute('checkOrder', []);
+            }
+            
+        } else {
+            $req = $this->createFormBuilder()
+            ->add('id', TextType::class, ['attr'=>['placeholder'=>'Order id']])
+            ->add('Check', SubmitType::class)
+            ->getForm();
+
+            $req->handleRequest($request);
+            if($req->isSubmitted() && $req->isValid())
+            {
+                $id = $req->getData()['id'];
+                
+                return $this->redirectToRoute('monitor', ['id'=>$id]);
+            }
+
+            return $this->render('app/monit-req.html.twig', [
+                'req'=>$req->createView()
+            ]);
+        }
+        
     }
 }

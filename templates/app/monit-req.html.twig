@@ -1,0 +1,16 @@
+{% extends "app/homepage.html.twig" %}
+
+{% block title %}
+    Check for your order
+{% endblock %}
+
+{% block body %}
+    <main>
+        <section class="form">
+            {{form_start(req)}}
+            {{form_widget(req.id)}}
+            {{form_widget(req.Check)}}
+            {{form_end(req)}}
+        </section>
+    </mian>
+{% endblock %}

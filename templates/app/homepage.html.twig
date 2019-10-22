@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Johnny's
+{% block title %}
+    Johnny's restaurant
 {% endblock %}
 
 {% block stylesheets %}
@@ -9,102 +10,83 @@
     <link href="{{asset('styles/app.css')}}" rel="stylesheet">
 {% endblock %}
 
-{% block nav %}
-    <nav class="nav">
-        <div class="label">
-            <a href="{{path('homepage')}}">Johnny's</a>
-        </div>
-        <div class="links">
-            <a href="{{path('meals')}}" title="Menu">Meals</a>
-            <a href="{{path('order')}}" title="Order online">Order</a>
-        </div>
-    </nav>
-{% endblock %}
-
-{% block flash %}
-    {% for label, messages in app.flashes %}
-        {% for message in messages %}
-            <div class="alert alert-{{label}}">
-                {{message|raw}}
-            </div>
-        {% endfor %}
-    {% endfor %}
-{% endblock %}
-
 {% block body %}
-    <article class="greet">
-        <section class="content">
-            <h2>Welcome to Johnny's restaurant</h2>
-            <p>Best restaurant in state</p>
+    <main>
+        <section class="greet-org">
+            <div class="greet"></div>
+            <div class="content">
+                <h2>Welcome to Johnny's restaurant</h2>
+                <p>Best restaurant in state</p>
+            </div>
         </section>
-    </article>
 
-    <article class="details">
-        <section class="location">
-            <span>
-                <a href="https://goo.gl/maps/1xRWFTxNwfHCmVfA9">
-                    <i class="fas fa-map-marker-alt"></i>
-                    3425 Maple Ave, Los Angeles
-                </a>
-            </span>
-            <span>
-                <a href="https://goo.gl/maps/wNHYeZF2RzerL6JE7">
-                    <i class="fas fa-map-marker-alt"></i>
-                    231 Parthenia St, Los Angeles
-                </a>
-            </span>
-            <span>
-                <a href="https://goo.gl/maps/nr1U8pGaS2zUqmq58">
-                    <i class="fas fa-map-marker-alt"></i>
-                    3425 Oak St, San Francisco
-                </a>
-            </span>
-            <span>
-                <a href="https://goo.gl/maps/6aXCrxqwkEyR7PAF6">
-                    <i class="fas fa-map-marker-alt"></i>
-                    343 24th St, San Francisco
-                </a>
-            </span>
-        </section>
-        <section class="work-hours">
-            {% set status = '' %}
-            {% if "now"|date('l') != 'Sunday' %}
-                {% if "now"|date('l') != 'Saturday' %}
-                    {% if 'now'|date('H:i:s') > '08:00:00' and 'now'|date('H:i:s') < '22:00:00' %}
-                        {% set status = 'open' %}
+        <section class="details">
+            <div class="location">
+                <span>
+                    <a href="https://goo.gl/maps/1xRWFTxNwfHCmVfA9">
+                        <i class="fas fa-map-marker-alt"></i>
+                        3425 Maple Ave, Los Angeles
+                    </a>
+                </span>
+                <span>
+                    <a href="https://goo.gl/maps/wNHYeZF2RzerL6JE7">
+                        <i class="fas fa-map-marker-alt"></i>
+                        231 Parthenia St, Los Angeles
+                    </a>
+                </span>
+                <span>
+                    <a href="https://goo.gl/maps/nr1U8pGaS2zUqmq58">
+                        <i class="fas fa-map-marker-alt"></i>
+                        3425 Oak St, San Francisco
+                    </a>
+                </span>
+                <span>
+                    <a href="https://goo.gl/maps/6aXCrxqwkEyR7PAF6">
+                        <i class="fas fa-map-marker-alt"></i>
+                        343 24th St, San Francisco
+                    </a>
+                </span>
+            </div>
+            <div class="work-hours">
+                {% set status = '' %}
+                {% if "now"|date('l') != 'Sunday' %}
+                    {% if "now"|date('l') != 'Saturday' %}
+                        {% if 'now'|date('H:i:s') > '08:00:00' and 'now'|date('H:i:s') < '22:00:00' %}
+                            {% set status = 'open' %}
+                        {% else %}
+                            {% set status = 'closed' %}
+                        {% endif %}
                     {% else %}
-                        {% set status = 'closed' %}
+                        {% if 'now'|date('H:i:s') > '10:00:00' and 'now'|date('H:i:s') < '20:00:00' %}
+                            {% set status = 'open' %}
+                        {% else %}
+                            {% set status = 'closed' %}
+                        {% endif %}
                     {% endif %}
                 {% else %}
-                    {% if 'now'|date('H:i:s') > '10:00:00' and 'now'|date('H:i:s') < '20:00:00' %}
-                        {% set status = 'open' %}
-                    {% else %}
-                        {% set status = 'closed' %}
-                    {% endif %}
+                    {% set status = 'closed' %}
                 {% endif %}
-            {% else %}
-                {% set status = 'closed' %}
-            {% endif %}
-            <p class="status {{status}}">
-                <i class="fas fa-clock"></i>
-                We are
-                {{status}}
-            </p>
+                <p class="status {{status}}">
+                    <i class="fas fa-clock"></i>
+                    We are
+                    {{status}}
+                </p>
 
-            <span class="hours">
-                <p>
-                    <span>Monday - Friday</span>
-                    <span>8:00 AM - 10:00PM</span>
-                </p>
-                <p>
-                    <span>Saturday</span>
-                    <span>10:00 AM - 8:00PM</span>
-                </p>
-                <p>
-                    <span>Sunday</span>
-                    <span>Closed</span>
-                </p>
-            </span>
+                <span class="hours">
+                    <p>
+                        <span>Monday - Friday</span>
+                        <span>8:00 AM - 10:00PM</span>
+                    </p>
+                    <p>
+                        <span>Saturday</span>
+                        <span>10:00 AM - 8:00PM</span>
+                    </p>
+                    <p>
+                        <span>Sunday</span>
+                        <span>Closed</span>
+                    </p>
+                </span>
+            </div>
         </section>
-    </article>
+    </main>
 {% endblock %}
