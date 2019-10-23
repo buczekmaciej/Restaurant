@@ -79,7 +79,7 @@ class AppController extends AbstractController
     }
 
     /**
-     * @Route("/order/pick/json", name="jsonMeal", methods={"POST"})
+     * @Route("/order/pick/json", name="jsonMeal", methods={"GET"})
      */
     public function jsonMeal(MealsRepository $mR)
     {

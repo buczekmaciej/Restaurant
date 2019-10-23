@@ -1,7 +1,7 @@
 // JSON request
 var getJSON = function(url, callback) {
   var xhr = new XMLHttpRequest();
-  xhr.open("POST", url, true);
+  xhr.open("GET", url, true);
   xhr.responseType = "json";
   xhr.onload = function() {
     var status = xhr.status;
@@ -51,7 +51,7 @@ getJSON("/order/pick/json", function(err, data) {
 
       var inp = document.createElement("input");
       inp.type = "number";
-      inp.className = "quantity-" + (i + 1);
+      inp.className = "quantity";
       inp.setAttribute("id", "quant-" + (i + 1));
       inp.setAttribute("placeholder", 0);
       counter.appendChild(inp);
@@ -69,6 +69,7 @@ getJSON("/order/pick/json", function(err, data) {
     submit.addEventListener("click", function() {
       if (confirm("Are you sure thats it?")) {
         pickResult(data);
+        submit.innerHTML = "<i class='fas fa-spinner'></i>Processing";
       }
     });
   }
@@ -107,11 +108,14 @@ function pickResult(data) {
     }
   }
 
-  if (list != null) {
+  if (list.length > 0) {
     list = JSON.stringify(list);
 
     fetch("/order/process/" + list, {}).then(
       res => (window.location = "/order/process/" + list)
     );
+  } else {
+    alert("You can't order nothing. Try again!");
+    window.location.reload();
   }
 }

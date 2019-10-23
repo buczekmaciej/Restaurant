@@ -18,7 +18,7 @@
         {% endif %}
     {% endif %}
 
-    <article class="orderStatus">
+    <main class="orderStatus">
         <section class="status" id="{{order.Status|lower}}">
             <p title="{{statTitle}}">Status:
                 <span>{{order.Status}}</span>
@@ -29,5 +29,9 @@
                 <span>{{order.createAt|date('D, M d Y, H:i')}}</span>
             </p>
         </section>
-    </article>
+        <section class="mem-req">
+            <b>{{order.id}}</b>
+            is id of your order remember it if you want to leave this page
+        </section>
+    </main>
 {% endblock %}

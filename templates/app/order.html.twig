@@ -2,16 +2,14 @@
 
 {% block title %}
     {{parent()}}
-    | Order
+    | Make order
 {% endblock %}
 
 {% block body %}
-    <article class="order">
-        <section class="orderForm">
-            {{form_start(order)}}
-            {{form_widget(order.Address)}}
-            {{form_widget(order.Proceed)}}
-            {{form_end(order)}}
-        </section>
-    </article>
+    <section class="order">
+        {{form_start(order)}}
+        {{form_widget(order.Address)}}
+        {{form_widget(order.Proceed)}}
+        {{form_end(order)}}
+    </section>
 {% endblock %}

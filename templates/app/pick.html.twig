@@ -1,6 +1,8 @@
-{% extends "base.html.twig" %}
+{% extends "app/homepage.html.twig" %}
 
-{% block title %}Johnny's | Pick meal
+{% block title %}
+    {{parent()}}
+    | Pick meal
 {% endblock %}
 
 {% block stylesheets %}
@@ -9,13 +11,12 @@
 {% endblock %}
 
 {% block body %}
-    <article class="pickEm" id="mainPick">
+    <main class="pickEm" id="mainPick">
         <section class="items" id="pick"></section>
-    </article>
+    </main>
 {% endblock %}
 
 {% block javascripts %}
     {{parent()}}
-    <script src="{{asset('js/jquery.js')}}"></script>
     <script src="{{asset('js/json.js')}}"></script>
 {% endblock %}

@@ -8,16 +8,10 @@
 
 {% block body %}
     <article class="summary">
-        <section class="address">
-            <h1>Order address</h1>
-            <p>
-                <i class="fas fa-map-marker-alt"></i>
-                {{location}}</p>
-        </section>
         <section class="list">
             <h2>Order list</h2>
             {% for meal in meals %}
-                <section class="mealCont">
+                <div class="mealCont">
                     <h3 class="name">{{meal.0}}</h3>
                     <p class="price-quant">
                         <i class="fas fa-dollar-sign"></i>
@@ -26,16 +20,21 @@
                         {{meal.2}}
                         =
                         <i class="fas fa-dollar-sign"></i>
-                        {{meal.3}}</p>
-                </section>
+                        {{meal.3}}
+                    </p>
+                </div>
             {% endfor %}
         </section>
         <section class="foot">
-            <p>Total:
+            <p class="ad-data">
+                <i class="fas fa-map-marker-alt"></i>
+                {{location}}
+            </p>
+            <p class="total-sum">Total:
                 {{total}}
                 <i class="fas fa-dollar-sign"></i>
             </p>
-            <a href="{{path('proceed')}}">
+            <a href="{{path('proceed')}}" class="sub">
                 <button>Submit order
                     <i class="fas fa-arrow-right"></i>
                 </button>
