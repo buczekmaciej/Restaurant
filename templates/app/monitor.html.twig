@@ -6,6 +6,11 @@
     {{order.id}}
 {% endblock %}
 
+{% block head %}
+    {{parent()}}
+    <meta http-equiv="refresh" content="300"/>
+{% endblock %}
+
 {% block body %}
     {% set statTitle = '' %}
     {% if order.Status == 'Ordered' %}

@@ -5,8 +5,9 @@
 {% endblock %}
 
 {% block body %}
-    <main>
+    <main class="monit-req">
         <section class="form">
+            <p>Insert order id</p>
             {{form_start(req)}}
             {{form_widget(req.id)}}
             {{form_widget(req.Check)}}

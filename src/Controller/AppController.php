@@ -30,11 +30,13 @@ class AppController extends AbstractController
      */
     public function meals(MealsRepository $mR)
     {
+        // Get unique types of meals
         $types=$mR->findTypes();
 
         $meals=array();
         foreach($types as $type)
-        {
+        {   
+            // For each type get all avalaible meals
             $meals[]=$mR->findBy(['Type'=>$type]);
         }
 
@@ -49,6 +51,7 @@ class AppController extends AbstractController
      */
     public function order(EntityManagerInterface $em, Request $request, SessionInterface $session)
     {
+        // Take delivery address
         $order=$this->createFormBuilder()
         ->add('Address', TextType::class,['attr'=>['placeholder'=>'Insert delivery address']])
         ->add('Proceed', SubmitType::class)
@@ -58,10 +61,11 @@ class AppController extends AbstractController
 
         if($order->isSubmitted() && $order->isValid())
         {
+            // Put address to session
             $address=$order->getData()['Address'];
-
             $session->set('address', $address);
 
+            // Redirect to picking meal after saving address to session
             return $this->redirectToRoute('pickMeal', []);
         }
 
@@ -83,8 +87,11 @@ class AppController extends AbstractController
      */
     public function jsonMeal(MealsRepository $mR)
     {
+        // Get price and name of all meals and encode data into json
         $meals=$mR->findMeals();
         $meals=json_encode($meals);
+
+        // Return json to get it in javascript
         return $this->json([$meals]);
     }
 
@@ -93,26 +100,27 @@ class AppController extends AbstractController
      */
     public function process($data, SessionInterface $session)
     {
-        if ($data != null) {
+        if ($data != null) { // Check if data is passed in url
+            // Get each object from passed url
             $data=explode('[', $data);
             $obj=array();
             foreach($data as $d)
             {
                 if($d != null)
                 {
-                    $obj[]=str_replace(']','',$d);
+                    $obj[]=str_replace(']','',$d); // Remove closing bracket
                 }
             }
             $data=array();
             foreach ($obj as $r) {
-                $data[]=str_replace('"',"",$r);
+                $data[]=str_replace('"',"",$r); // Remove quote chars
             }
             $result=array();
             foreach($data as $d)
             {
-                $result[]=explode(",",$d);
+                $result[]=explode(",",$d); // Get single object
             }
-            $session->set('list', $result);
+            $session->set('list', $result); // Put objects into session
             
             return $this->redirectToRoute('summary', []);
         } else {
@@ -126,9 +134,11 @@ class AppController extends AbstractController
      */
     public function summary(SessionInterface $session, Request $request)
     {
+        // Get address and order
         $address=$session->get('address');
         $orderList=$session->get('list');
 
+        // Make sure address and order list is not empty
         if(!$address)
         {
             return $this->redirectToRoute('order', []);
@@ -142,7 +152,7 @@ class AppController extends AbstractController
 
         foreach($orderList as $ol)
         {
-            $total+=$ol[3];
+            $total+=$ol[3]; // Sum total price for whole order
         }
 
         return $this->render('app/summary.html.twig', [
@@ -157,26 +167,31 @@ class AppController extends AbstractController
      */
     public function proceed(SessionInterface $session, EntityManagerInterface $em)
     {
+        // Get address and order
         $address=$session->get('address');
         $orderList=$session->get('list');
 
-        if($address && $orderList)
+        if($address && $orderList) // If both are not empty create order
         {
+            // Make new order object
             $order=new Orders();
             $order->setCreateAt(new \DateTime());
             $order->setAddress($address);
             $order->setOrderList($orderList);
             $order->setStatus('Ordered');
 
+            // Put just made object in database
             $em->persist($order);
             $em->flush();
 
-
+            // Get rid of address and order list
             $session->remove('address');
             $session->remove('list');
 
-            $link = $this->generateUrl('monitor',['id'=>$order->getId()]);
+            // Generate link to order monitor
+            $link = $this->redirectToRoute('monitor',['id'=>$order->getId()]);
 
+            // Redirect to homepage and display link to monitor for just made order
             $this->addFlash('success', sprintf('Your order has been submitted. You can check it <a href="%s">here</a>', $link));
             return $this->redirectToRoute('homepage', []);
         }
@@ -188,20 +203,21 @@ class AppController extends AbstractController
      */
     public function monitor(OrdersRepository $oR, Request $request)
     {
-        $id = $request->get('id');
+        $id = $request->get('id'); // Check which url has been used
 
-        if ($id) {
-            if (intval($id)) {
-                $order=$oR->checkOrder($id)[0];
+        if ($id) { // If second (containing id) consider if let see monitor
+            if (intval($id)) { // If id is a number pass
+                $order=$oR->checkOrder($id)[0]; // Get order
 
                 return $this->render('app/monitor.html.twig', [
                     'order'=>$order
                 ]);
-            } else {
+            } else { // If is not number back to first url
                 return $this->redirectToRoute('checkOrder', []);
             }
             
-        } else {
+        } else { // If first url ask for order id
+            // Get id from user form
             $req = $this->createFormBuilder()
             ->add('id', TextType::class, ['attr'=>['placeholder'=>'Order id']])
             ->add('Check', SubmitType::class)
@@ -210,8 +226,9 @@ class AppController extends AbstractController
             $req->handleRequest($request);
             if($req->isSubmitted() && $req->isValid())
             {
-                $id = $req->getData()['id'];
+                $id = $req->getData()['id']; // Get id
                 
+                // Direct to second url with proivded id to verify
                 return $this->redirectToRoute('monitor', ['id'=>$id]);
             }
 

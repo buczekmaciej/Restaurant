@@ -425,3 +425,58 @@ p .fa-map-marker-alt {
   font-size: 3.5vh;
   margin: 5vh 0 0;
 }
+
+.monit-req {
+  height: 88vh;
+  width: 75%;
+  position: absolute;
+  top: 10vh;
+  left: 12.5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.monit-req .form {
+  width: 50%;
+  height: 80%;
+  background-color: #f5f5f5f1;
+}
+.monit-req p {
+  font-size: 7vh;
+  margin: 3vh 0 0;
+  text-align: center;
+}
+.monit-req .form form {
+  width: 100%;
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.monit-req input {
+  width: 90%;
+  height: 7vh;
+  border: none;
+  background-color: #f8c6c6;
+  border-radius: 8px;
+  font-size: 4vh;
+  outline: none;
+  padding: 0.3vh 1vw;
+  color: #000;
+  margin: 1vh auto;
+}
+.monit-req input::placeholder {
+  color: #000;
+}
+.monit-req button {
+  width: 50%;
+  height: 8vh;
+  margin: 1vh auto;
+  border-radius: 5px;
+  border: 1px solid #000;
+  color: #000;
+  font-size: 4.5vh;
+  cursor: pointer;
+  background-color: transparent;
+}
