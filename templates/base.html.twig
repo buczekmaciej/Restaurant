@@ -1,42 +1,16 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8"> {% block refresh %}{% endblock %}
-        <title>
-            {% block title %}{% endblock %}
-        </title>
-        {% block stylesheets %}
-            <link href="{{asset('styles/alerts.css')}}" rel="stylesheet">
-            <link href="https://fonts.googleapis.com/css?family=Indie+Flower&display=swap" rel="stylesheet">
-            <link href="https://fonts.googleapis.com/css?family=Blinker&display=swap" rel="stylesheet">
-            <link href="https://fonts.googleapis.com/css?family=Dosis&display=swap" rel="stylesheet">
-        {% endblock %}
-    </head>
-    <body>
-        {% block nav %}
-            <nav class="nav">
-                <div class="label">
-                    <a href="{{path('homepage')}}">Johnny's</a>
-                </div>
-                <div class="links">
-                    <a href="{{path('meals')}}" title="Menu">Meals</a>
-                    <a href="{{path('order')}}" title="Order online">Order</a>
-                    <a href="{{path('checkOrder')}}" title="Order status">Order status</a>
-                </div>
-            </nav>
-        {% endblock %}
-        {% block flash %}
-            {% for label, messages in app.flashes %}
-                {% for message in messages %}
-                    <div class="alert alert-{{label}}">
-                        {{message|raw}}
-                    </div>
-                {% endfor %}
-            {% endfor %}
-        {% endblock %}
-        {% block body %}{% endblock %}
-        {% block javascripts %}
-            <script src="https://kit.fontawesome.com/75e13d0c4b.js"></script>
-        {% endblock %}
-    </body>
+	<head>
+		<meta charset="UTF-8"> {% block refresh %}{% endblock %}
+		<title>
+			{% block title %}{% endblock %}
+		</title>
+		{% block stylesheets %}{% endblock %}
+		<link href="{{asset('styles/alerts.css')}}" rel="stylesheet">
+		<link href="{{asset('styles/app.css')}}" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+	</head>
+	<body>
+		{% block body %}{% endblock %}
+	</body>
 </html>

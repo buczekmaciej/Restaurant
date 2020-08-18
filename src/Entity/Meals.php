@@ -34,7 +34,8 @@ class Meals
     private $Ingredients;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Type", inversedBy="meals")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $Type;
 
@@ -103,12 +104,12 @@ class Meals
         $this->getIngredients()->clear();
     }
 
-    public function getType(): ?string
+    public function getType(): ?Type
     {
         return $this->Type;
     }
 
-    public function setType(string $Type): self
+    public function setType(?Type $Type): self
     {
         $this->Type = $Type;
 

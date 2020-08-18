@@ -4,7 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Meals;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Common\Persistence\ManagerRegistry;
 
 /**
  * @method Meals|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,29 +14,31 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class MealsRepository extends ServiceEntityRepository
 {
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Meals::class);
     }
 
-    public function findTypes()
+    public function getSortedMeals()
     {
-        return $this->createQueryBuilder('m')
-            ->select('m.Type')->distinct()
-            ->orderBy('m.Type', 'ASC')
-            ->getQuery()
-            ->getResult()
-        ;
-    }
+        $output = [];
 
-    public function findMeals()
-    {
-        return $this->createQueryBuilder('m')
-            ->select('m.Name, m.Price')
-            ->orderBy('m.Type', 'ASC')
+        $types = $this->createQueryBuilder('m')
+            ->select("DISTINCT t.Name")
+            ->leftJoin('m.Type', 't')
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
+        $elems = $this->createQueryBuilder('m')
+            ->getQuery()
+            ->getResult();
+
+        foreach ($types as $type) {
+            foreach ($elems as $e) {
+                if ($e->getType() == $type['Type']) $output[$type['Type']][] = $e;
+            }
+        }
+
+        return $output;
     }
 
     // /**

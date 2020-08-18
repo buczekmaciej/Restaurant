@@ -1,42 +1,10 @@
-{% extends "app/homepage.html.twig" %}
+{% extends 'app/index.html.twig' %}
 
-{% block title %}
-    {{parent()}}
-    | Order:
-    {{order.id}}
+{% block addition %}{% endblock %}
+
+{% block stylesheets %}
+	{{parent()}}
+	<link href="{{asset('/styles/app/.css')}}" rel="stylesheet">
 {% endblock %}
 
-{% block head %}
-    {{parent()}}
-    <meta http-equiv="refresh" content="300"/>
-{% endblock %}
-
-{% block body %}
-    {% set statTitle = '' %}
-    {% if order.Status == 'Ordered' %}
-        {% set statTitle = 'Order passed to realization' %}
-    {% else %}
-        {% if order.Status == 'Processing' %}
-            {% set statTitle = 'Order is during realization' %}
-        {% else %}
-            {% set statTitle = 'Order has been delivered' %}
-        {% endif %}
-    {% endif %}
-
-    <main class="orderStatus">
-        <section class="status" id="{{order.Status|lower}}">
-            <p title="{{statTitle}}">Status:
-                <span>{{order.Status}}</span>
-            </p>
-        </section>
-        <section class="created">
-            <p>Order date:
-                <span>{{order.createAt|date('D, M d Y, H:i')}}</span>
-            </p>
-        </section>
-        <section class="mem-req">
-            <b>{{order.id}}</b>
-            is id of your order remember it if you want to leave this page
-        </section>
-    </main>
-{% endblock %}
+{% block content %}{% endblock %}

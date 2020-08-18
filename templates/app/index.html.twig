@@ -1,0 +1,42 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+	Johnny's |
+	{% block addition %}{% endblock %}
+{% endblock %}
+
+{% block stylesheets %}
+	<link href="{{asset('/styles/app/index.css')}}" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+	{% block nav %}
+		<nav class="nav">
+			<a href="{{path('homepage')}}" title="Homepage">
+				<img {% if app.request.attributes.get("_route") == "homepage" %} src="{{asset('/images/icons/active/home.svg')}}" {% else %} src="{{asset('/images/icons/inactive/home.svg')}}" {% endif %}>
+			</a>
+			<a href="{{path('menu')}}" title="Menu">
+				<img {% if app.request.attributes.get("_route") == "menu" %} src="{{asset('/images/icons/active/menu.svg')}}" {% else %} src="{{asset('/images/icons/inactive/menu.svg')}}" {% endif %}>
+			</a>
+			<p class="label">
+				Johnny's
+			</p>
+			<a href="" title="Order online">
+				<img {% if app.request.attributes.get("_route") == null %} src="{{asset('/images/icons/active/order.svg')}}" {% else %} src="{{asset('/images/icons/inactive/order.svg')}}" {% endif %}>
+			</a>
+			<a href="" title="Order status">
+				<img {% if app.request.attributes.get("_route") == null %} src="{{asset('/images/icons/active/delivery.svg')}}" {% else %} src="{{asset('/images/icons/inactive/delivery.svg')}}" {% endif %}>
+			</a>
+		</nav>
+	{% endblock %}
+	{% block flash %}
+		{% for label, messages in app.flashes %}
+			{% for message in messages %}
+				<div class="alert alert-{{label}}">
+					{{message|raw}}
+				</div>
+			{% endfor %}
+		{% endfor %}
+	{% endblock %}
+	{% block content %}{% endblock %}
+{% endblock %}

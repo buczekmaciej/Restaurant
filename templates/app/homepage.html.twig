@@ -1,92 +1,91 @@
-{% extends 'base.html.twig' %}
+{% extends 'app/index.html.twig' %}
 
-{% block title %}
-    Johnny's restaurant
+{% block addition %}
+	Homepage
 {% endblock %}
 
 {% block stylesheets %}
-    {{parent()}}
-
-    <link href="{{asset('styles/app.css')}}" rel="stylesheet">
+	{{parent()}}
+	<link href="{{asset('/styles/app/homepage.css')}}" rel="stylesheet">
 {% endblock %}
 
-{% block body %}
-    <main>
-        <section class="greet-org">
-            <div class="greet"></div>
-            <div class="content">
-                <h2>Welcome to Johnny's restaurant</h2>
-                <p>Best restaurant in state</p>
-            </div>
-        </section>
+{% block content %}
+	<main>
+		<section class="greet-org">
+			<div class="hello">
+				<p>Welcome to Johnny's restaurant</p>
+				<p>Best restaurant in state</p>
+			</div>
+			<a href="" class="greet-link">
+				Go and find what you want
+			</a>
+		</section>
 
-        <section class="details">
-            <div class="location">
-                <span>
-                    <a href="https://goo.gl/maps/1xRWFTxNwfHCmVfA9">
-                        <i class="fas fa-map-marker-alt"></i>
-                        3425 Maple Ave, Los Angeles
-                    </a>
-                </span>
-                <span>
-                    <a href="https://goo.gl/maps/wNHYeZF2RzerL6JE7">
-                        <i class="fas fa-map-marker-alt"></i>
-                        231 Parthenia St, Los Angeles
-                    </a>
-                </span>
-                <span>
-                    <a href="https://goo.gl/maps/nr1U8pGaS2zUqmq58">
-                        <i class="fas fa-map-marker-alt"></i>
-                        3425 Oak St, San Francisco
-                    </a>
-                </span>
-                <span>
-                    <a href="https://goo.gl/maps/6aXCrxqwkEyR7PAF6">
-                        <i class="fas fa-map-marker-alt"></i>
-                        343 24th St, San Francisco
-                    </a>
-                </span>
-            </div>
-            <div class="work-hours">
-                {% set status = '' %}
-                {% if "now"|date('l') != 'Sunday' %}
-                    {% if "now"|date('l') != 'Saturday' %}
-                        {% if 'now'|date('H:i:s') > '08:00:00' and 'now'|date('H:i:s') < '22:00:00' %}
-                            {% set status = 'open' %}
-                        {% else %}
-                            {% set status = 'closed' %}
-                        {% endif %}
-                    {% else %}
-                        {% if 'now'|date('H:i:s') > '10:00:00' and 'now'|date('H:i:s') < '20:00:00' %}
-                            {% set status = 'open' %}
-                        {% else %}
-                            {% set status = 'closed' %}
-                        {% endif %}
-                    {% endif %}
-                {% else %}
-                    {% set status = 'closed' %}
-                {% endif %}
-                <p class="status {{status}}">
-                    <i class="fas fa-clock"></i>
-                    We are
-                    {{status}}
-                </p>
+		<section class="details">
+			<div class="location">
+				<p class="here-wr">
+					We are here
+				</p>
+				<a href="https://goo.gl/maps/1xRWFTxNwfHCmVfA9" target="_blank">
+					<img src="{{asset('/images/icons/location.svg')}}" class="location-mark">
+					3425 Maple Ave, Los Angeles
+				</a>
+				<a href="https://goo.gl/maps/wNHYeZF2RzerL6JE7" target="_blank">
+					<img src="{{asset('/images/icons/location.svg')}}" class="location-mark">
+					231 Parthenia St, Los Angeles
+				</a>
+				<a href="https://goo.gl/maps/nr1U8pGaS2zUqmq58" target="_blank">
+					<img src="{{asset('/images/icons/location.svg')}}" class="location-mark">
+					3425 Oak St, San Francisco
+				</a>
+				<a href="https://goo.gl/maps/6aXCrxqwkEyR7PAF6" target="_blank">
+					<img src="{{asset('/images/icons/location.svg')}}" class="location-mark">
+					343 24th St, San Francisco
+				</a>
+			</div>
+			<div class="work-hours">
+				<p class="work-time">
+					Our work time
+				</p>
+				{% set status = '' %}
+				{% if "now"|date('l') != 'Sunday' %}
+					{% if "now"|date('l') != 'Saturday' %}
+						{% if 'now'|date('H:i:s') > '08:00:00' and 'now'|date('H:i:s') < '22:00:00' %}
+							{% set status = 'open' %}
+						{% else %}
+							{% set status = 'closed' %}
+						{% endif %}
+					{% else %}
+						{% if 'now'|date('H:i:s') > '10:00:00' and 'now'|date('H:i:s') < '20:00:00' %}
+							{% set status = 'open' %}
+						{% else %}
+							{% set status = 'closed' %}
+						{% endif %}
+					{% endif %}
+				{% else %}
+					{% set status = 'closed' %}
+				{% endif %}
+				<p class="status {{status}}">
+					<i class="fas fa-clock"></i>
+					We are
+					{{status}}
+				</p>
 
-                <span class="hours">
-                    <p>
-                        <span>Monday - Friday</span>
-                        <span>8:00 AM - 10:00PM</span>
-                    </p>
-                    <p>
-                        <span>Saturday</span>
-                        <span>10:00 AM - 8:00PM</span>
-                    </p>
-                    <p>
-                        <span>Sunday</span>
-                        <span>Closed</span>
-                    </p>
-                </span>
-            </div>
-        </section>
-    </main>
+				<span class="hours">
+					<p>
+						<span>Monday - Friday</span>
+						<span>8:00 AM - 10:00PM</span>
+					</p>
+					<p>
+						<span>Saturday</span>
+						<span>10:00 AM - 8:00PM</span>
+					</p>
+					<p>
+						<span>Sunday</span>
+						<span>Closed</span>
+					</p>
+				</span>
+			</div>
+		</section>
+	</main>
 {% endblock %}

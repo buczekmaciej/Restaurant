@@ -1,22 +1,10 @@
-{% extends "app/homepage.html.twig" %}
+{% extends 'app/index.html.twig' %}
 
-{% block title %}
-    {{parent()}}
-    | Pick meal
-{% endblock %}
+{% block addition %}{% endblock %}
 
 {% block stylesheets %}
-    {{parent()}}
-    <link href="{{asset('styles/app.css')}}" rel="stylesheet">
+	{{parent()}}
+	<link href="{{asset('/styles/app/.css')}}" rel="stylesheet">
 {% endblock %}
 
-{% block body %}
-    <main class="pickEm" id="mainPick">
-        <section class="items" id="pick"></section>
-    </main>
-{% endblock %}
-
-{% block javascripts %}
-    {{parent()}}
-    <script src="{{asset('js/json.js')}}"></script>
-{% endblock %}
+{% block content %}{% endblock %}

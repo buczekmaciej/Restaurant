@@ -1,15 +1,10 @@
-{% extends "app/homepage.html.twig" %}
+{% extends 'app/index.html.twig' %}
 
-{% block title %}
-    {{parent()}}
-    | Make order
+{% block addition %}{% endblock %}
+
+{% block stylesheets %}
+	{{parent()}}
+	<link href="{{asset('/styles/app/.css')}}" rel="stylesheet">
 {% endblock %}
 
-{% block body %}
-    <section class="order">
-        {{form_start(order)}}
-        {{form_widget(order.Address)}}
-        {{form_widget(order.Proceed)}}
-        {{form_end(order)}}
-    </section>
-{% endblock %}
+{% block content %}{% endblock %}

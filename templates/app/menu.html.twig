@@ -1,10 +1,12 @@
 {% extends 'app/index.html.twig' %}
 
-{% block addition %}{% endblock %}
+{% block addition %}
+	Menu
+{% endblock %}
 
 {% block stylesheets %}
 	{{parent()}}
-	<link href="{{asset('/styles/app/.css')}}" rel="stylesheet">
+	<link href="{{asset('/styles/app/menu.css')}}" rel="stylesheet">
 {% endblock %}
 
 {% block content %}{% endblock %}

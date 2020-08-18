@@ -1,0 +1,94 @@
+main {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.greet-org {
+  width: 100%;
+  height: 100vh;
+  background-image: url("/images/food.png");
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+.hello {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.hello p:first-of-type {
+  font-size: 4rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+.hello p:last-of-type {
+  font-size: 2.5rem;
+  margin-top: 0.5rem;
+}
+.greet-link {
+  color: #fff;
+  background-color: red;
+  border-radius: 8px;
+  border: none;
+  font-size: 1.75rem;
+  padding: 1.5rem 3.5rem;
+}
+
+.details {
+  height: 65vh;
+  display: flex;
+  padding: 2.5rem 7.5rem;
+}
+.location,
+.work-hours {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.here-wr,
+.work-time {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+}
+.location a {
+  width: 75%;
+  display: flex;
+  align-items: center;
+  font-size: 1.25rem;
+  margin-top: 1rem;
+  font-weight: 600;
+}
+.location img {
+  height: 2.5rem;
+  margin-right: 1.5rem;
+}
+
+.status {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-top: 1rem;
+}
+.open {
+  color: rgba(0, 128, 0, 0.897);
+}
+.closed {
+  color: rgba(255, 0, 0, 0.541);
+}
+
+.hours p {
+  margin-top: 1rem;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+.hours p span:first-of-type {
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+.hours p span:last-of-type {
+  font-size: 1.25rem;
+}
