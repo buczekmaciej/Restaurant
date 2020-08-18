@@ -1,10 +1,26 @@
 {% extends 'app/index.html.twig' %}
 
-{% block addition %}{% endblock %}
+{% block addition %}
+	Order - Address
+{% endblock %}
 
 {% block stylesheets %}
 	{{parent()}}
-	<link href="{{asset('/styles/app/.css')}}" rel="stylesheet">
+	<link href="{{asset('/styles/app/order.css')}}" rel="stylesheet">
 {% endblock %}
 
-{% block content %}{% endblock %}
+{% block content %}
+	<div class="address-form">
+		<p>
+			Provide address to move forward
+		</p>
+		<input type="text" class="address-input">
+		<button class="submit-address" disabled>
+			Next
+		</button>
+	</div>
+{% endblock %}
+
+{% block javascripts %}
+	<script src="{{asset('/js/orderAddr.js')}}"></script>
+{% endblock %}

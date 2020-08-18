@@ -1,10 +1,39 @@
 {% extends 'app/index.html.twig' %}
 
-{% block addition %}{% endblock %}
+{% block addition %}
+	Order monitor
+{% endblock %}
 
 {% block stylesheets %}
 	{{parent()}}
-	<link href="{{asset('/styles/app/.css')}}" rel="stylesheet">
+	<link href="{{asset('/styles/app/monitor.css')}}" rel="stylesheet">
 {% endblock %}
 
-{% block content %}{% endblock %}
+{% block content %}
+	<section class="monitor-org">
+		<form action="{{path('orderMonitor')}}" method="GET">
+			<input name="id" class="monitor-input" type="number">
+			<button class="monitor-btn">
+				Check your order
+			</button>
+		</form>
+		{% if status is not null %}
+			<div class="order-status">
+				<p class="created-at">
+					{{status.createAt|date('M d, Y')}}
+				</p>
+				<p class="address">
+					{{status.Address}}
+				</p>
+				<p class="status">
+					{{status.Status}}
+				</p>
+				<div class="list">
+					<pre>
+					{{ dump(status.orderList) }}
+				</pre>
+				</div>
+			</div>
+		{% endif %}
+	</section>
+{% endblock %}

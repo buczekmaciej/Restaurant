@@ -21,11 +21,11 @@
 			<p class="label">
 				Johnny's
 			</p>
-			<a href="" title="Order online">
-				<img {% if app.request.attributes.get("_route") == null %} src="{{asset('/images/icons/active/order.svg')}}" {% else %} src="{{asset('/images/icons/inactive/order.svg')}}" {% endif %}>
+			<a href="{{path('order')}}" title="Order online">
+				<img {% if app.request.attributes.get("_route") in ["order", "orderPick", "orderSummary"] %} src="{{asset('/images/icons/active/order.svg')}}" {% else %} src="{{asset('/images/icons/inactive/order.svg')}}" {% endif %}>
 			</a>
-			<a href="" title="Order status">
-				<img {% if app.request.attributes.get("_route") == null %} src="{{asset('/images/icons/active/delivery.svg')}}" {% else %} src="{{asset('/images/icons/inactive/delivery.svg')}}" {% endif %}>
+			<a href="{{path('orderMonitor')}}" title="Order status">
+				<img {% if app.request.attributes.get("_route") == "orderMonitor" %} src="{{asset('/images/icons/active/delivery.svg')}}" {% else %} src="{{asset('/images/icons/inactive/delivery.svg')}}" {% endif %}>
 			</a>
 		</nav>
 	{% endblock %}

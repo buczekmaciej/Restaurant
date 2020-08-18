@@ -43,6 +43,14 @@ class MealsRepository extends ServiceEntityRepository
         return $output;
     }
 
+    public function getOrderMeals()
+    {
+        return $this->createQueryBuilder('m')
+            ->select('m.id, m.Name, m.Price')
+            ->getQuery()
+            ->getArrayResult();
+    }
+
     // /**
     //  * @return Meals[] Returns an array of Meals objects
     //  */
