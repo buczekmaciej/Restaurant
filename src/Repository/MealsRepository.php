@@ -26,15 +26,17 @@ class MealsRepository extends ServiceEntityRepository
         $types = $this->createQueryBuilder('m')
             ->select("DISTINCT t.Name")
             ->leftJoin('m.Type', 't')
+            ->orderBy('t.Name', 'ASC')
             ->getQuery()
             ->getResult();
+
         $elems = $this->createQueryBuilder('m')
             ->getQuery()
             ->getResult();
 
         foreach ($types as $type) {
             foreach ($elems as $e) {
-                if ($e->getType() == $type['Type']) $output[$type['Type']][] = $e;
+                if ($e->getType()->getName() == $type['Name']) $output[$type['Name']][] = $e;
             }
         }
 

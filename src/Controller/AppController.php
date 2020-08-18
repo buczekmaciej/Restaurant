@@ -18,10 +18,12 @@ class AppController extends AbstractController
     /**
      * @Route("/menu", name="menu")
      */
-    public function menu(\App\Repository\MealsRepository $mr)
+    public function menu(\App\Repository\MealsRepository $mr, \App\Repository\IngredientsRepository $ir)
     {
-        dump($mr->findAll(), $mr->getSortedMeals());
+        dump($mr->getSortedMeals());
 
-        return $this->render('app/menu.html.twig', []);
+        return $this->render('app/menu.html.twig', [
+            'menu' => $mr->getSortedMeals()
+        ]);
     }
 }

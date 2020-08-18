@@ -9,4 +9,35 @@
 	<link href="{{asset('/styles/app/menu.css')}}" rel="stylesheet">
 {% endblock %}
 
-{% block content %}{% endblock %}
+{% block content %}
+	<section class="menu">
+		{% for key, elems in menu %}
+			<p class="subsection-tag">
+				{{key}}
+			</p>
+			<div class="meals">
+				{% for meal in elems %}
+					<div class="meal">
+						<p class="meal-name">
+							{{meal.Name}}
+						</p>
+						<p class="meal-price">
+							${{meal.Price}}
+						</p>
+						<div class="meal-ingredients">
+							{% for ing in meal.Ingredients %}
+								<span>
+									{% if loop.last == false %}
+										{{ing.Name}},
+									{% else %}
+										{{ing.Name}}
+									{% endif %}
+								</span>
+							{% endfor %}
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		{% endfor %}
+	</section>
+{% endblock %}
