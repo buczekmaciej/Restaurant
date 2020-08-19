@@ -11,17 +11,19 @@
 
 {% block content %}
 	<section class="pick-form">
-		{% for meal in meals %}
-			<div class="meal" data-id={{meal.id}}>
-				<p>
-					{{meal.Name}}
-				</p>
-				<p>
-					${{meal.Price}}
-				</p>
-				<input class="amount" type="number" value="0">
-			</div>
-		{% endfor %}
+		<div class="meals">
+			{% for meal in meals %}
+				<div class="meal" data-id={{meal.id}}>
+					<p>
+						{{meal.Name}}
+					</p>
+					<p>
+						${{meal.Price}}
+					</p>
+					<input class="amount" type="number" value="0" min="0" onfocus="this.value = ''" onblur="this.value = this.value || 0">
+				</div>
+			{% endfor %}
+		</div>
 		<button class="pick-btn">
 			Sum up
 		</button>

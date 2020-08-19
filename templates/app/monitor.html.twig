@@ -12,7 +12,10 @@
 {% block content %}
 	<section class="monitor-org">
 		<form action="{{path('orderMonitor')}}" method="GET">
-			<input name="id" class="monitor-input" type="number">
+			<input name="id" class="monitor-input" type="number" required>
+			<label>
+				Order id
+			</label>
 			<button class="monitor-btn">
 				Check your order
 			</button>
@@ -20,19 +23,45 @@
 		{% if status is not null %}
 			<div class="order-status">
 				<p class="created-at">
-					{{status.createAt|date('M d, Y')}}
+					<span>
+						Date of order
+					</span>
+					<span>
+						{{status.createAt|date('M d, Y')}}
+					</span>
 				</p>
 				<p class="address">
-					{{status.Address}}
+					<span>
+						Address of order
+					</span>
+					<span>
+						{{status.Address}}
+					</span>
 				</p>
 				<p class="status">
-					{{status.Status}}
+					<span>
+						Status of order
+					</span>
+					<span>
+						{{status.Status}}
+					</span>
 				</p>
-				<div class="list">
-					<pre>
-					{{ dump(status.orderList) }}
-				</pre>
-				</div>
+				<p class="list">
+					<span>
+						List of meals
+					</span>
+					<span>
+						{% for meal in status.orderList %}
+							{% if loop.last != true %}
+								{{meal.quant}}x
+								{{meal.name}},
+							{% else %}
+								{{meal.quant}}x
+								{{meal.name}}
+							{% endif %}
+						{% endfor %}
+					</span>
+				</p>
 			</div>
 		{% endif %}
 	</section>

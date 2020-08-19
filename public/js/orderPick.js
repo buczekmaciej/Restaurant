@@ -11,7 +11,7 @@ btn.onclick = () => {
       o.id = meal.getAttribute("data-id");
       o.quant = meal.children[2].value;
       o.name = meal.children[0].innerHTML.replace(/[\n\t]+/gm, "");
-      o.price = parseInt(meal.children[1].innerHTML.substr(7));
+      o.price = parseInt(meal.children[1].innerHTML.replace(/[\n\t$]+/gm, ""));
       list.push(o);
     }
   });

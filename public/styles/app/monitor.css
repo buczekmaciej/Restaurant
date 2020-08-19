@@ -5,6 +5,17 @@
 form {
   margin: 0 auto 0.75rem;
   width: 40%;
+  position: relative;
+}
+label {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.75rem;
+  opacity: 1;
+}
+input:focus ~ label,
+input:valid ~ label {
+  opacity: 0;
 }
 input {
   width: 60%;
@@ -21,4 +32,25 @@ button {
   background-color: red;
   border: none;
   border-radius: 16px;
+}
+
+.order-status {
+  width: 55%;
+  margin: 2rem auto;
+}
+
+.order-status p {
+  margin: 2rem 0;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+.order-status p span:first-of-type {
+  font-weight: 600;
+  font-size: 1.75rem;
+  margin-bottom: 0.75rem;
+}
+.order-status p span:last-of-type {
+  color: grey;
+  font-size: 1.25rem;
 }
