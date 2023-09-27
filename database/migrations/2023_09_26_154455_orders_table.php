@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('code')->unique();
             $table->float('total');
             $table->json('address');
+            $table->string('status');
             $table->unsignedBigInteger('location_id')->nullable();
             $table->timestamps();
         });

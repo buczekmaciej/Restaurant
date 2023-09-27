@@ -20,6 +20,7 @@ Route::get('/menu', [AppController::class, 'menu'])->name('menu');
 
 Route::prefix('orders')->controller(OrderController::class)->name('order.')->group(function () {
     Route::get('/new');
-    Route::get('/track', 'track')->name('track');
+    Route::get('/track/{order:code?}', 'track')->name('track');
+    Route::post('/track/{order:code?}', 'track');
     Route::post('/remove');
 });

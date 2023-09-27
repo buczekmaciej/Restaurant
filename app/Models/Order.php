@@ -13,15 +13,33 @@ class Order extends Model
         'code',
         'total',
         'address',
+        'status'
     ];
 
     public function meals()
     {
-        return $this->belongsToMany(Meal::class);
+        return $this->belongsToMany(Meal::class)->withPivot('quantity');
     }
 
     public function servingPlace()
     {
-        return $this->belongsTo(Location::class);
+        return $this->belongsTo(Location::class, 'location_id');
+    }
+
+    public function getAddress()
+    {
+        return $this->formatAddress($this->address);
+    }
+
+    public function getServingPlaceAddress()
+    {
+        return $this->formatAddress($this->servingPlace()->first()->address);
+    }
+
+    private function formatAddress(string $address)
+    {
+        $address = json_decode($address);
+
+        return "{$address->street}, {$address->city} {$address->zip}";
     }
 }

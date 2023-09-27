@@ -15,3 +15,17 @@ input::-webkit-calendar-picker-indicator {
         @apply bg-transparent text-white placeholder:text-[#f7f7f7b4] border-2 border-solid border-[#f7f7f7b4] outline-transparent p-4 w-96 rounded-lg;
     }
 }
+
+.status {
+    @apply px-4 py-2 rounded-xl font-semibold text-lg;
+    --tw-bg-opacity: 0.05;
+}
+.preparing {
+    @apply status bg-blue-700 text-blue-700;
+}
+.delivering {
+    @apply status bg-orange-500 text-orange-500;
+}
+.delivered {
+    @apply status bg-green-600 text-green-600;
+}
