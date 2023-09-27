@@ -3,13 +3,11 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Hash;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Order>
  */
-class UserFactory extends Factory
+class OrderFactory extends Factory
 {
     private function generateCode()
     {
@@ -29,15 +27,9 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
-        $positions = ["employee", "manager"];
-
         return [
             'code' => $this->generateCode(),
-            'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
-            'password' => Hash::make('password'),
-            'position' => $positions[array_rand($positions)],
-            'phone' => fake()->phoneNumber(),
+            'total' => fake()->randomFloat(2, 15, 100),
             'address' => json_encode(['street' => fake()->streetAddress(), 'city' => fake()->city(), 'zip' => fake()->postcode()])
         ];
     }
