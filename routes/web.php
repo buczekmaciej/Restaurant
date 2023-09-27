@@ -1,7 +1,7 @@
 <?php
 
-use App\Models\Order;
-use App\Services\LocationServices;
+use App\Http\Controllers\AppController;
+use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,6 +15,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('base', ['cities' => LocationServices::getCities()]);
+Route::get('/', [AppController::class, 'homepage'])->name('homepage');
+Route::get('/menu', [AppController::class, 'menu'])->name('menu');
+
+Route::prefix('orders')->controller(OrderController::class)->name('order.')->group(function () {
+    Route::get('/new');
+    Route::get('/track', 'track')->name('track');
+    Route::post('/remove');
 });

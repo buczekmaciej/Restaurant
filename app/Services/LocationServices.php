@@ -6,8 +6,8 @@ use App\Models\Location;
 
 class LocationServices
 {
-    public static function getCities()
+    public static function getLocations()
     {
-        return Location::distinct()->pluck('address->city AS city');
+        return Location::distinct()->orderBy('city', 'ASC')->pluck('address->city AS city', 'address->street AS street');
     }
 }

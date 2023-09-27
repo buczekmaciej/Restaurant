@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+input::-webkit-calendar-picker-indicator {
+    @apply opacity-100 pt-0;
+}
+
+@layer components {
+    .home-input {
+        @apply bg-transparent text-white placeholder:text-[#f7f7f7b4] border-2 border-solid border-[#f7f7f7b4] outline-transparent p-4 w-96 rounded-lg;
+    }
+}
