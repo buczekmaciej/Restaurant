@@ -9,5 +9,6 @@ class OrderController extends Controller
 {
     public function track()
     {
+        return view('views.orders.tracker');
     }
 }

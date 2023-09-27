@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Services\LocationServices;
+use App\Services\MealServices;
 use Illuminate\Http\Request;
 
 class AppController extends Controller
@@ -15,6 +16,6 @@ class AppController extends Controller
 
     public function menu()
     {
-        return view('views.menu');
+        return view('views.menu')->with('menu', MealServices::getMenu());
     }
 }

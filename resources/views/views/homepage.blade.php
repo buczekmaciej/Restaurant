@@ -5,7 +5,7 @@
 @section('class', 'flex flex-col')
 
 @section('body')
-    <div class="absolute t-0 l-0 z-10 text-white w-full h-20 flex items-center justify-between px-40 border-b-[1px] border-solid border-b-[#f7f7f729]">
+    <div class="absolute top-0 left-0 z-10 text-white w-full h-20 flex items-center justify-between px-40 border-b-[1px] border-solid border-b-[#f7f7f729]">
         <p class="text-2xl font-bold">Restaurant</p>
         <div class="flex items-center gap-6">
             <a class="hover:underline" href="{{ route('menu') }}">Menu</a>
@@ -13,7 +13,7 @@
         </div>
     </div>
     <div class="h-screen">
-        <img alt="Homepage background" class="w-full h-screen object-cover absolute t-0 l-0 -z-10" src="{{ asset('/images/bg.jpg') }}" />
+        <img alt="Homepage background" class="w-full h-screen object-cover absolute top-0 left-0 -z-10" src="{{ asset('/images/bg.jpg') }}" />
         <div class="w-full h-full bg-[#141414CC] flex flex-col justify-center gap-5 px-40">
             <p class="text-white text-7xl font-semibold">Craving something good?</p>
             <p class="text-white font-light w-[55%] leading-7 tracking-wide">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore velit nihil dicta fuga, inventore eveniet nam quae maxime obcaecati earum perferendis consectetur sunt omnis esse culpa libero deserunt quod saepe? Odio, fugit voluptatibus, doloremque sapiente ex ipsam nihil odit, inventore vitae in harum perferendis neque voluptate cupiditate ipsum dolore temporibus. Soluta quaerat minima iure! Ex cupiditate veniam quae
