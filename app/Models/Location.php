@@ -22,4 +22,9 @@ class Location extends Model
     {
         return $this->hasMany(Order::class);
     }
+
+    public function getAddressAttribute()
+    {
+        return json_decode($this->attributes['address']);
+    }
 }

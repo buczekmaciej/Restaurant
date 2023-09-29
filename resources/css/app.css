@@ -9,6 +9,9 @@ html {
 input::-webkit-calendar-picker-indicator {
     @apply opacity-100 pt-0;
 }
+body:has(#discard.flex) {
+    @apply h-screen overflow-hidden;
+}
 
 @layer components {
     .home-input {

@@ -17,4 +17,9 @@ class Ingredient extends Model
     {
         return $this->belongsToMany(Meal::class);
     }
+
+    public function getNameAttribute()
+    {
+        return ucfirst($this->attributes['name']);
+    }
 }

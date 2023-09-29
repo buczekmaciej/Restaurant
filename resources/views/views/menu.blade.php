@@ -14,15 +14,13 @@
             @foreach ($menu as $meal)
                 <div class="w-full flex flex-col gap-4 border-solid border-[1px] border-[#3d3d3d23] p-4 rounded-lg">
                     <div class="flex items-center justify-between">
-                        <p class="font-semibold text-3xl">{{ ucfirst($meal->name) }}</p>
+                        <p class="font-semibold text-3xl">{{ $meal->name }}</p>
                         <p class="font-semibold text-lg">${{ $meal->price }}</p>
                     </div>
-                    <p class="text-sm">{{ ucfirst($meal->description) }}</p>
-                    <div class="flex flex-wrap items-center gap-2 mt-3">
-                        @foreach ($meal->ingredients as $ingredient)
-                            <p class="px-5 py-2 bg-zinc-100 rounded-md">{{ ucfirst($ingredient->name) }}</p>
-                        @endforeach
-                    </div>
+                    <p class="text-sm">{{ $meal->description }}</p>
+                    <p class="mt-3 text-sm">
+                        {{ $meal->ingredients()->orderBy('name')->pluck('name')->implode(', ') }}
+                    </p>
                 </div>
             @endforeach
         </div>

@@ -24,4 +24,14 @@ class Meal extends Model
     {
         return $this->belongsToMany(Order::class);
     }
+
+    public function getNameAttribute()
+    {
+        return ucfirst($this->attributes['name']);
+    }
+
+    public function getDescriptionAttribute()
+    {
+        return ucfirst($this->attributes['description']);
+    }
 }

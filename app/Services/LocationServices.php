@@ -6,8 +6,13 @@ use App\Models\Location;
 
 class LocationServices
 {
-    public static function getLocations()
+    public static function getLocations(): array
     {
-        return Location::distinct()->orderBy('city', 'ASC')->pluck('address->city AS city', 'address->street AS street');
+        return Location::distinct()->orderBy('address->city', 'ASC')->pluck('address', 'id')->toArray();
+    }
+
+    public static function getOneLocation($modifiedID): Location
+    {
+        return Location::where('id', (($modifiedID / 8) - 3) / 5)->first();
     }
 }

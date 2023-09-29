@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Services\AppServices;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
@@ -11,17 +12,6 @@ use Illuminate\Support\Facades\Hash;
  */
 class UserFactory extends Factory
 {
-    private function generateCode()
-    {
-        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $code = "";
-        $charactersLength = strlen($characters);
-
-        for ($i = 0; $i < 35; $i++) $code .= $characters[random_int(0, $charactersLength - 1)];
-
-        return $code;
-    }
-
     /**
      * Define the model's default state.
      *
@@ -32,7 +22,7 @@ class UserFactory extends Factory
         $positions = ["employee", "manager"];
 
         return [
-            'code' => $this->generateCode(),
+            'code' => AppServices::generateCode(),
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
             'password' => Hash::make('password'),

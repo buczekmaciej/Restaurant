@@ -26,20 +26,8 @@ class Order extends Model
         return $this->belongsTo(Location::class, 'location_id');
     }
 
-    public function getAddress()
+    public function getAddressAttribute()
     {
-        return $this->formatAddress($this->address);
-    }
-
-    public function getServingPlaceAddress()
-    {
-        return $this->formatAddress($this->servingPlace()->first()->address);
-    }
-
-    private function formatAddress(string $address)
-    {
-        $address = json_decode($address);
-
-        return "{$address->street}, {$address->city} {$address->zip}";
+        return json_decode($this->attributes['address']);
     }
 }

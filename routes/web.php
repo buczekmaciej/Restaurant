@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AppController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\Worker\OrderController as WorkerOrderController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,8 +20,11 @@ Route::get('/', [AppController::class, 'homepage'])->name('homepage');
 Route::get('/menu', [AppController::class, 'menu'])->name('menu');
 
 Route::prefix('orders')->controller(OrderController::class)->name('order.')->group(function () {
-    Route::get('/new');
     Route::get('/track/{order:code?}', 'track')->name('track');
     Route::post('/track/{order:code?}', 'track');
-    Route::post('/remove');
+    Route::post('/new', 'create')->name('create');
+    Route::post('/summary', 'summary')->name('summary');
+    Route::post('/summary/finish', 'save')->name('save');
 });
+
+Route::get('/worker', [WorkerOrderController::class, 'dashboard']);
