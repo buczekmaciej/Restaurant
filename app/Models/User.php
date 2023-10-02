@@ -31,6 +31,6 @@ class User extends Authenticatable
 
     public function workplace()
     {
-        return $this->belongsTo(Location::class);
+        return $this->belongsTo(Location::class, 'location_id');
     }
 }

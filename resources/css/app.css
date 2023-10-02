@@ -32,3 +32,13 @@ body:has(#discard.flex) {
 .delivered {
     @apply status bg-green-600 text-green-600;
 }
+
+.unfold > div:first-of-type {
+    @apply pb-4 border-b-[1px] border-solid border-b-[#e9e9e938];
+}
+.unfold > div:first-of-type svg {
+    @apply rotate-180;
+}
+.unfold > div:last-of-type {
+    @apply max-h-fit pt-4;
+}

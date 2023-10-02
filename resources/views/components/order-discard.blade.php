@@ -13,4 +13,4 @@
     </div>
 </div>
 
-<script src="/js/orderDiscard.js"></script>
+<script src="{{ asset('/js/orderDiscard.js') }}"></script>

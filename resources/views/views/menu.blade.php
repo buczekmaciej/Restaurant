@@ -26,5 +26,5 @@
         </div>
     </div>
 
-    <script src="/js/menu.js"></script>
+    <script src="{{ asset('/js/menu.js') }}"></script>
 @endsection

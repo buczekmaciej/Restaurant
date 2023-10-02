@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\AppController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\Worker\AuthController;
+use App\Http\Controllers\Worker\DashboardController;
 use App\Http\Controllers\Worker\OrderController as WorkerOrderController;
 use Illuminate\Support\Facades\Route;
 
@@ -27,4 +29,17 @@ Route::prefix('orders')->controller(OrderController::class)->name('order.')->gro
     Route::post('/summary/finish', 'save')->name('save');
 });
 
-Route::get('/worker', [WorkerOrderController::class, 'dashboard']);
+Route::prefix('staff')->name('staff.')->group(function () {
+    Route::prefix('auth')->name('auth.')->controller(AuthController::class)->group(function () {
+        Route::get('/login', 'loginView')->name('login');
+        Route::post('/login', 'loginHandle');
+        Route::get('/logout', 'logout')->name('logout')->middleware('auth');
+    });
+
+    Route::get('/working', [WorkerOrderController::class, 'working'])->name('working')->middleware('auth');
+
+    Route::get('/', [DashboardController::class, 'dashboard'])->name('dashboard')->middleware('superiorstaff');
+
+    Route::controller(WorkerOrderController::class)->middleware('superiorstaff')->group(function () {
+    });
+});

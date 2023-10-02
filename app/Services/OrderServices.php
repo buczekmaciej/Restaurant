@@ -6,6 +6,7 @@ use App\Enums\OrderStatus;
 use App\Models\Meal;
 use App\Models\Order;
 use App\Services\LocationServices;
+use Illuminate\Database\Eloquent\Collection;
 
 class OrderServices
 {
@@ -26,5 +27,15 @@ class OrderServices
         foreach ($pickedMeals as $meal) $order->meals()->attach($meal->id, ['quantity' => $meals[$meal->name]['quantity']]);
 
         return $order->code;
+    }
+
+    public static function checkNewOrders(string $date, string $place): bool
+    {
+        return LocationServices::getOneLocation($place)->orders()->where('created_at', '>', $date)->count() > 0;
+    }
+
+    public static function getPendindOrdersForPlace(string $place): Collection
+    {
+        return LocationServices::getOneLocation($place)->orders()->where('status', 'preparing')->orderBy('created_at', 'ASC')->get();
     }
 }

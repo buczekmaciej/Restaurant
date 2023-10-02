@@ -80,5 +80,5 @@
         </div>
     @endif
 
-    <script src="/js/tracker.js"></script>
+    <script src="{{ asset('/js/tracker.js') }}"></script>
 @endsection

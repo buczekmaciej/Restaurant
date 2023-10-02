@@ -48,5 +48,5 @@
     </div>
     @include('components.order-discard')
 
-    <script src="/js/orderCreate.js"></script>
+    <script src="{{ asset('/js/orderCreate.js') }}"></script>
 @endsection
