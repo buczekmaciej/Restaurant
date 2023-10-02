@@ -14,6 +14,14 @@ body:has(#discard.flex) {
 }
 
 @layer components {
+    .active-link {
+        @apply bg-slate-600 pointer-events-none font-semibold !pl-8;
+    }
+
+    .inactive-link {
+        @apply hover:bg-slate-400 hover:bg-opacity-10 font-light;
+    }
+
     .home-input {
         @apply bg-transparent text-white placeholder:text-[#f7f7f7b4] border-2 border-solid border-[#f7f7f7b4] outline-transparent p-4 w-96 rounded-lg;
     }
