@@ -11,7 +11,7 @@
             <a class="{{ Route::is('staff.dashboard') ? 'active-link' : 'inactive-link' }} rounded-md p-4 duration-150" href="{{ route('staff.dashboard') }}">Home</a>
             <a class="{{ Route::is('') ? 'active-link' : 'inactive-link' }} rounded-md p-4 duration-150" href="">Orders</a>
             <a class="{{ Route::is('') ? 'active-link' : 'inactive-link' }} rounded-md p-4 duration-150" href="">Meals</a>
-            <a class="{{ Route::is('') ? 'active-link' : 'inactive-link' }} rounded-md p-4 duration-150" href="">Ingredients</a>
+            <a class="{{ Route::is('staff.ingredients.*') ? 'active-link' : 'inactive-link' }} rounded-md p-4 duration-150" href="{{ route('staff.ingredients.view') }}">Ingredients</a>
             <a class="{{ Route::is('') ? 'active-link' : 'inactive-link' }} rounded-md p-4 duration-150" href="">Locations</a>
             <a class="{{ Route::is('') ? 'active-link' : 'inactive-link' }} rounded-md p-4 duration-150" href="">Employees</a>
         </div>
@@ -27,5 +27,5 @@
             </div>
         @endif
     </div>
-    <div class="w-5/6 h-screen p-6 flex flex-col gap-4">@yield('content')</div>
+    <div class="w-5/6 h-screen [&>div]:p-6 flex flex-col gap-6">@yield('content')</div>
 @endsection

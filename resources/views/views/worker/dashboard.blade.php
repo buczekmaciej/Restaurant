@@ -16,24 +16,16 @@
             <p class="font-semibold text-3xl col-span-8">Income statistics</p>
             <div class="grid grid-cols-6 gap-3 sticky -top-4 bg-slate-800 py-6">
                 <p class="font-semibold col-span-3 text-xl">Address</p>
-                <p class="font-semibold col-span-1 text-xl">Hired employees</p>
-                <p class="font-semibold col-span-1 text-xl">Monthly income</p>
-                <p class="font-semibold col-span-1 text-xl">Monthly outcome</p>
+                <p class="font-semibold col-span-1 text-xl text-center">Hired employees</p>
+                <p class="font-semibold col-span-1 text-xl text-center">Monthly income</p>
+                <p class="font-semibold col-span-1 text-xl text-center">Monthly outcome</p>
             </div>
             @foreach ($locations as $location)
                 <div class="grid grid-cols-6 gap-3 py-4 border-y border-y-[#dadada33]">
                     <p class="col-span-3 truncate">{{ $location['address'] }}</p>
-                    <p class="col-span-1">{{ $location['employees'] }}</p>
-                    <p class="col-span-1">{{ $location['income'] }}</p>
-                    <p class="col-span-1 {{ $location['outcome'] }}">{{ $location['profit'] }}$</p>
-                </div>
-            @endforeach
-            @foreach ($locations as $location)
-                <div class="grid grid-cols-6 gap-3 py-4 border-y border-y-[#dadada33]">
-                    <p class="col-span-3 truncate">{{ $location['address'] }}</p>
-                    <p class="col-span-1">{{ $location['employees'] }}</p>
-                    <p class="col-span-1">{{ $location['income'] }}</p>
-                    <p class="col-span-1 {{ $location['outcome'] }}">{{ $location['profit'] }}$</p>
+                    <p class="col-span-1 text-center">{{ $location['employees'] }}</p>
+                    <p class="col-span-1 text-center">{{ $location['income'] }}</p>
+                    <p class="col-span-1 text-center {{ $location['outcome'] }}">{{ $location['profit'] }}$</p>
                 </div>
             @endforeach
         </div>

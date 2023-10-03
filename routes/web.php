@@ -4,6 +4,7 @@ use App\Http\Controllers\AppController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\Worker\AuthController;
 use App\Http\Controllers\Worker\DashboardController;
+use App\Http\Controllers\Worker\IngredientsController;
 use App\Http\Controllers\Worker\OrderController as WorkerOrderController;
 use Illuminate\Support\Facades\Route;
 
@@ -38,8 +39,17 @@ Route::prefix('staff')->name('staff.')->group(function () {
 
     Route::get('/working', [WorkerOrderController::class, 'working'])->name('working')->middleware('auth');
 
-    Route::get('/', [DashboardController::class, 'dashboard'])->name('dashboard')->middleware('superiorstaff');
+    Route::middleware('superiorstaff')->group(function () {
+        Route::get('/', [DashboardController::class, 'dashboard'])->name('dashboard');
 
-    Route::controller(WorkerOrderController::class)->middleware('superiorstaff')->group(function () {
+        Route::prefix('ingredients')->name('ingredients.')->controller(IngredientsController::class)->group(function () {
+            Route::get('/', 'view')->name('view');
+            Route::get('/{ingredient:name}', 'manage')->name('manage');
+            Route::post('/{ingredient:name}/update', 'update')->name('update');
+            Route::delete('/{ingredient:name}/delete', 'delete')->name('delete');
+        });
+
+        Route::controller(WorkerOrderController::class)->group(function () {
+        });
     });
 });
