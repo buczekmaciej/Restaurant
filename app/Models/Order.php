@@ -30,4 +30,9 @@ class Order extends Model
     {
         return json_decode($this->attributes['address']);
     }
+
+    public function getTotalAttribute()
+    {
+        return number_format($this->attributes['total'], 2, '.', ',');
+    }
 }

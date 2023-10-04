@@ -9,7 +9,7 @@
         <p class="text-4xl">Dashboard</p>
         <div class="flex flex-col gap-4">
             <a class="{{ Route::is('staff.dashboard') ? 'active-link' : 'inactive-link' }} rounded-md p-4 duration-150" href="{{ route('staff.dashboard') }}">Home</a>
-            <a class="{{ Route::is('') ? 'active-link' : 'inactive-link' }} rounded-md p-4 duration-150" href="">Orders</a>
+            <a class="{{ Route::is('staff.orders.*') ? 'active-link' : 'inactive-link' }} rounded-md p-4 duration-150" href="{{ route('staff.orders.view') }}">Orders</a>
             <a class="{{ Route::is('') ? 'active-link' : 'inactive-link' }} rounded-md p-4 duration-150" href="">Meals</a>
             <a class="{{ Route::is('staff.ingredients.*') ? 'active-link' : 'inactive-link' }} rounded-md p-4 duration-150" href="{{ route('staff.ingredients.view') }}">Ingredients</a>
             <a class="{{ Route::is('') ? 'active-link' : 'inactive-link' }} rounded-md p-4 duration-150" href="">Locations</a>

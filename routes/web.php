@@ -49,7 +49,6 @@ Route::prefix('staff')->name('staff.')->group(function () {
             Route::delete('/{ingredient:name}/delete', 'delete')->name('delete');
         });
 
-        Route::controller(WorkerOrderController::class)->group(function () {
-        });
+        Route::get('/orders', [WorkerOrderController::class, 'view'])->name('orders.view');
     });
 });

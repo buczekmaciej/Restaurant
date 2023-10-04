@@ -34,4 +34,9 @@ class Meal extends Model
     {
         return ucfirst($this->attributes['description']);
     }
+
+    public function getPriceAttribute()
+    {
+        return number_format($this->attributes['price'], 2, '.', ',');
+    }
 }
