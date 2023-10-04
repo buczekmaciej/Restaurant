@@ -5,6 +5,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\Worker\AuthController;
 use App\Http\Controllers\Worker\DashboardController;
 use App\Http\Controllers\Worker\IngredientsController;
+use App\Http\Controllers\Worker\MealsController;
 use App\Http\Controllers\Worker\OrderController as WorkerOrderController;
 use Illuminate\Support\Facades\Route;
 
@@ -50,5 +51,12 @@ Route::prefix('staff')->name('staff.')->group(function () {
         });
 
         Route::get('/orders', [WorkerOrderController::class, 'view'])->name('orders.view');
+
+        Route::prefix('meals')->name('meals.')->controller(MealsController::class)->group(function () {
+            Route::get('/', 'view')->name('view');
+            Route::get('/{meal:name}', 'manage')->name('manage');
+            Route::post('/{meal:name}/update', 'update')->name('update');
+            Route::delete('/{meal:name}/delete', 'delete')->name('delete');
+        });
     });
 });
