@@ -17,7 +17,7 @@ class LocationFactory extends Factory
     public function definition(): array
     {
         return [
-            'address' => json_encode(['street' => fake()->streetAddress(), 'city' => fake()->city(), 'zip' => fake()->postcode()]),
+            'address' => json_encode(['street' => fake()->streetAddress(), 'city' => fake()->city()]),
         ];
     }
 }

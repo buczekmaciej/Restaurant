@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <div class="flex flex-col gap-8 h-full">
+    <div class="flex flex-col gap-8">
         <a class="border-b-[1px] border-solid border-b-white w-fit p-2 duration-150 hover:pl-5" href="{{ route('staff.meals.view') }}">Return back to meals</a>
         <p class="font-light text-2xl">Manage meal with name: <i class="font-semibold">{{ $meal->name }}</i></p>
         <div class="flex flex-col gap-8 border-y-[1px] border-solid border-y-[#ffffff54] py-8">
@@ -35,7 +35,7 @@
         </div>
         <div class="flex flex-col gap-3">
             <p class="text-2xl font-semibold">Delete meal</p>
-            <p class="">This action has no undo possibility. Make sure you know know what you are doing and are aware of consequences</p>
+            <p>This action has no undo possibility. Make sure you know know what you are doing and are aware of consequences</p>
             <form action="{{ route('staff.meals.delete', ['meal' => $meal->name]) }}" method="post">
                 @method('DELETE')
                 @csrf

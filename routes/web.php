@@ -5,6 +5,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\Worker\AuthController;
 use App\Http\Controllers\Worker\DashboardController;
 use App\Http\Controllers\Worker\IngredientsController;
+use App\Http\Controllers\Worker\LocationsController;
 use App\Http\Controllers\Worker\MealsController;
 use App\Http\Controllers\Worker\OrderController as WorkerOrderController;
 use Illuminate\Support\Facades\Route;
@@ -61,6 +62,15 @@ Route::prefix('staff')->name('staff.')->group(function () {
             Route::get('/{meal:name}', 'manage')->name('manage');
             Route::post('/{meal:name}/update', 'update')->name('update');
             Route::delete('/{meal:name}/delete', 'delete')->name('delete');
+        });
+
+        Route::prefix('locations')->name('locations.')->controller(LocationsController::class)->group(function () {
+            Route::get('/', 'view')->name('view');
+            Route::get('/create', 'createView')->name('create');
+            Route::post('/create', 'createHandle');
+            Route::get('/{location:id}', 'manage')->name('manage');
+            Route::post('/{location:id}/update', 'update')->name('update');
+            Route::delete('/{location:id}/delete', 'delete')->name('delete');
         });
     });
 });
