@@ -4,7 +4,10 @@
 
 @section('content')
     <div class="flex flex-col gap-8 h-full overflow-auto">
-        <p class="font-semibold text-4xl">Ingredients</p>
+        <div class="flex justify-between items-center">
+            <p class="font-semibold text-4xl">Ingredients</p>
+            <a class="px-4 py-3 rounded-lg bg-slate-500 hover:bg-slate-600 duration-150" href="{{ route('staff.ingredients.create') }}">Add ingredient</a>
+        </div>
         <div class="flex flex-col">
             <div class="grid grid-cols-3 gap-3 sticky -top-6 bg-slate-800 p-6">
                 <p class="font-semibold{{ auth()->user()->position === 'owner' ? '' : ' col-span-2' }}">Name</p>

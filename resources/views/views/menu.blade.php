@@ -17,7 +17,6 @@
                         <p class="font-semibold text-3xl">{{ $meal->name }}</p>
                         <p class="font-semibold text-lg">${{ $meal->price }}</p>
                     </div>
-                    <p class="text-sm">{{ $meal->description }}</p>
                     <p class="mt-3 text-sm">
                         {{ $meal->ingredients()->orderBy('name')->pluck('name')->implode(', ') }}
                     </p>

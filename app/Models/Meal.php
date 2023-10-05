@@ -12,7 +12,6 @@ class Meal extends Model
     protected $fillable = [
         'name',
         'price',
-        'description'
     ];
 
     public function ingredients()

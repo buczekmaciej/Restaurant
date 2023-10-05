@@ -38,4 +38,22 @@ class IngredientsController extends Controller
 
         return redirect()->route('staff.ingredients.view');
     }
+
+    public function createView(): View
+    {
+        return view('views.worker.ingredients.create');
+    }
+
+    public function createHandle(Request $request): RedirectResponse
+    {
+        $valid = $request->validate([
+            'name' => 'string|required'
+        ]);
+
+        if ($valid) {
+            Ingredient::create($valid);
+        }
+
+        return redirect()->route('staff.ingredients.view');
+    }
 }

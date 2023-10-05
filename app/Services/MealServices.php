@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Ingredient;
 use App\Models\Meal;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -19,5 +20,11 @@ class MealServices
         foreach ($order as $meal) $total += ($meal['price'] * $meal['quantity']);
 
         return $total;
+    }
+
+    public static function createMeal($data, $ingredients): void
+    {
+        $meal = Meal::create($data);
+        $meal->ingredients()->attach(Ingredient::whereIn('name', $ingredients)->pluck('id'));
     }
 }

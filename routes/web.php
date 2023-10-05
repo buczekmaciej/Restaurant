@@ -45,6 +45,8 @@ Route::prefix('staff')->name('staff.')->group(function () {
 
         Route::prefix('ingredients')->name('ingredients.')->controller(IngredientsController::class)->group(function () {
             Route::get('/', 'view')->name('view');
+            Route::get('/create', 'createView')->name('create');
+            Route::post('/create', 'createHandle');
             Route::get('/{ingredient:name}', 'manage')->name('manage');
             Route::post('/{ingredient:name}/update', 'update')->name('update');
             Route::delete('/{ingredient:name}/delete', 'delete')->name('delete');
@@ -54,6 +56,8 @@ Route::prefix('staff')->name('staff.')->group(function () {
 
         Route::prefix('meals')->name('meals.')->controller(MealsController::class)->group(function () {
             Route::get('/', 'view')->name('view');
+            Route::get('/create', 'createView')->name('create');
+            Route::post('/create', 'createHandle');
             Route::get('/{meal:name}', 'manage')->name('manage');
             Route::post('/{meal:name}/update', 'update')->name('update');
             Route::delete('/{meal:name}/delete', 'delete')->name('delete');
