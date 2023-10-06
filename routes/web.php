@@ -4,6 +4,7 @@ use App\Http\Controllers\AppController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\Worker\AuthController;
 use App\Http\Controllers\Worker\DashboardController;
+use App\Http\Controllers\Worker\EmployeesController;
 use App\Http\Controllers\Worker\IngredientsController;
 use App\Http\Controllers\Worker\LocationsController;
 use App\Http\Controllers\Worker\MealsController;
@@ -71,6 +72,15 @@ Route::prefix('staff')->name('staff.')->group(function () {
             Route::get('/{location:id}', 'manage')->name('manage');
             Route::post('/{location:id}/update', 'update')->name('update');
             Route::delete('/{location:id}/delete', 'delete')->name('delete');
+        });
+
+        Route::prefix('employees')->name('employees.')->controller(EmployeesController::class)->group(function () {
+            Route::get('/', 'view')->name('view');
+            Route::get('/create', 'createView')->name('create');
+            Route::post('/create', 'createHandle');
+            Route::get('/{user:code}', 'manage')->name('manage');
+            Route::post('/{user:code}/update', 'update')->name('update');
+            Route::delete('/{user:code}/delete', 'delete')->name('delete');
         });
     });
 });

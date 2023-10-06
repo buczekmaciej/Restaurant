@@ -33,4 +33,14 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Location::class, 'location_id');
     }
+
+    public function getAddressAttribute()
+    {
+        return json_decode($this->attributes['address']);
+    }
+
+    public function getPositionAttribute()
+    {
+        return ucfirst($this->attributes['position']);
+    }
 }

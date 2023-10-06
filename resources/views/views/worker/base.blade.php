@@ -13,7 +13,7 @@
             <a class="{{ Route::is('staff.meals.*') ? 'active-link' : 'inactive-link' }} rounded-md p-4 duration-150" href="{{ route('staff.meals.view') }}">Meals</a>
             <a class="{{ Route::is('staff.ingredients.*') ? 'active-link' : 'inactive-link' }} rounded-md p-4 duration-150" href="{{ route('staff.ingredients.view') }}">Ingredients</a>
             <a class="{{ Route::is('staff.locations.*') ? 'active-link' : 'inactive-link' }} rounded-md p-4 duration-150" href="{{ route('staff.locations.view') }}">Locations</a>
-            <a class="{{ Route::is('') ? 'active-link' : 'inactive-link' }} rounded-md p-4 duration-150" href="">Employees</a>
+            <a class="{{ Route::is('staff.employees.*') ? 'active-link' : 'inactive-link' }} rounded-md p-4 duration-150" href="{{ route('staff.employees.view') }}">Employees</a>
         </div>
         @if (Route::is('staff.dashboard'))
             <a class="mt-auto w-full bg-slate-900 text-white rounded-lg p-4 text-center hover:bg-slate-700 duration-150" href="{{ route('staff.auth.logout') }}">Logout</a>

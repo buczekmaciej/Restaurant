@@ -18,7 +18,7 @@ class LocationsController extends Controller
 
     public function manage(Location $location): View
     {
-        return view('views.worker.locations.manage', ['location' => $location, 'employees' => User::orderBy('name', 'ASC')->pluck('id', 'name')]);
+        return view('views.worker.locations.manage', ['location' => $location, 'employees' => User::orderBy('name', 'ASC')->select('id', 'name', 'address')->get()]);
     }
 
     public function update(Location $location, Request $request): RedirectResponse

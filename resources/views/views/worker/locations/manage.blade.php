@@ -7,8 +7,8 @@
 @section('content')
     <div class="flex flex-col gap-8">
         <a class="text-lg border-b-[1px] border-solid border-b-white w-fit p-2 duration-150 hover:pl-5" href="{{ route('staff.locations.view') }}">Return back to locations</a>
-        <p class="font-light text-6xl">Manage location with id: <i class="font-semibold">{{ $location->id }}</i></p>
-        <div class="flex flex-col gap-8 max-w-5xl border-y-[1px] border-solid border-y-[#ffffff54] py-8">
+        <p class="font-light text-3xl">Manage location with address: <i class="font-semibold">{{ $location->address->street }}, {{ $location->address->city }}</i></p>
+        <div class="flex flex-col gap-8 border-y-[1px] border-solid border-y-[#ffffff54] py-8">
             <p class="text-4xl font-semibold">Change location address</p>
             <form action="{{ route('staff.locations.update', ['location' => $location->id]) }}" class="flex flex-col gap-4" method="post">
                 <div class="grid grid-cols-2 gap-3">
@@ -23,9 +23,15 @@
                 </div>
                 <div class="flex flex-col gap-3">
                     <p>Employees</p>
-                    <div class="grid grid-cols-4 gap-4 max-h-64 overflow-auto">
-                        @foreach ($employees as $name => $id)
-                            <label class="flex gap-3 cursor-pointer"><input {{ $location->employees->contains('name', $name) ? 'checked' : '' }} name="employees[]" type="checkbox" value="{{ $id }}" /> {{ $name }}</label>
+                    <div class="grid grid-cols-4 gap-6 max-h-64 overflow-auto">
+                        @foreach ($employees as $employee)
+                            <label class="flex gap-3 cursor-pointer">
+                                <input {{ $location->employees->contains('name', $employee->name) ? 'checked' : '' }} name="employees[]" type="checkbox" value="{{ $employee->id }}" />
+                                <p class="flex flex-col gap-1">
+                                    <span class="text-lg">{{ $employee->name }}</span>
+                                    <span class="text-xs">{{ $employee->address->street }}, {{ $employee->address->city }}</span>
+                                </p>
+                            </label>
                         @endforeach
                     </div>
                 </div>
@@ -33,7 +39,7 @@
                 @csrf
             </form>
         </div>
-        <div class="flex flex-col gap-3 max-w-5xl">
+        <div class="flex flex-col gap-3">
             <p class="text-4xl font-semibold">Delete location</p>
             <p>This action has no undo possibility. Make sure you know know what you are doing and are aware of consequences</p>
             <form action="{{ route('staff.locations.delete', ['location' => $location->id]) }}" method="post">
